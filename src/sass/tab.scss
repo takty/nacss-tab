@@ -1,0 +1,23 @@
+/**
+ *
+ * Tab Style
+ *
+ * @author Takuto Yanagida
+ * @version 2021-10-21
+ *
+ */
+
+
+@use 'scroll';
+@use 'stack';
+
+
+div.tab-scroll {
+	@include scroll.style-scroll;
+	@include scroll.style-scroll-decoration;
+
+	div.tab-scroll > [data-nc-tab-bar] {
+		border-top: rgba(#777, 0.25);
+		background-color: rgba(#777, 0.1);
+	}
+}

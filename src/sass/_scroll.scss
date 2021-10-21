@@ -1,0 +1,67 @@
+/**
+ *
+ * Tab - Scroll (SCSS)
+ *
+ * @author Takuto Yanagida
+ * @version 2021-10-21
+ *
+ */
+
+
+@mixin style-scroll {
+	--bar-margin-top      : 4rem;
+	--bar-inactive-opacity: 0.5;
+	--tab-gap             : 0.25rem 1rem;
+	--tab-min-width       : 2rem;
+	--tab-max-width       : 30vw;
+
+	[data-nc-tab-bar] {
+		&:where(:not(:first-child)) { margin-top: var(--bar-margin-top); }
+
+		display  : flex;
+		flex-wrap: wrap;
+		gap      : var(--tab-gap);
+
+		clear  : both;
+		padding: 0;
+
+		opacity   : var(--bar-inactive-opacity);
+		transition: opacity 0.2s;
+
+		&[data-nc-active],
+		&:hover { opacity: 1; }
+
+		li {
+			display: flex;
+
+			a {
+				display  : inline-block;
+				min-width: var(--tab-min-width);
+
+				max-width    : var(--tab-max-width);
+				text-overflow: ellipsis;
+				white-space  : nowrap;
+				overflow     : hidden;
+			}
+		}
+	}
+}
+
+@mixin style-scroll-decoration {
+	[data-nc-tab-bar] {
+		border-bottom   : 1px solid #ddd;
+		background-color: #eee;
+
+		li {
+			a {
+				padding: 0.25rem 0.5rem;
+			}
+			&:not([data-nc-current]) > a:hover {
+				background-color: #ddd;
+			}
+			&[data-nc-current] > a {
+				background-color: #ccc;
+			}
+		}
+	}
+}
