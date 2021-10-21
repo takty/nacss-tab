@@ -21,3 +21,8 @@ div.tab-scroll {
 		background-color: rgba(#777, 0.1);
 	}
 }
+
+div.tab-stack {
+	@include stack.style-stack;
+	@include stack.style-stack-decoration;
+}

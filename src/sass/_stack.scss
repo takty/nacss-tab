@@ -1,0 +1,123 @@
+/**
+ *
+ * Tab Page Classes (SCSS)
+ *
+ * @author Takuto Yanagida
+ * @version 2021-10-21
+ *
+ */
+
+
+@mixin style-stack {
+	--tab-gap      : 0.25rem 1rem;
+	--tab-min-width: 2rem;
+	--tab-max-width: 30vw;
+
+	position      : relative;
+	display       : flex;
+	flex-direction: column;
+
+	> div {
+		position      : absolute;
+		bottom        : 1000vh;
+		pointer-events: none;
+		opacity       : 0;
+		> * { opacity: 0; }
+	}
+	> div[data-nc-current] {
+		position  : static;
+		opacity   : 1;
+		flex-grow : 1;
+		pointer-events: auto;
+		> * {
+			opacity: 1;
+			transition: opacity 0.2s;
+		}
+	}
+
+	[data-nc-tab-bar] {
+		display  : flex;
+		flex-wrap: wrap;
+		gap      : var(--tab-gap);
+
+		clear  : both;
+		z-index: 1;
+		padding: 0;
+
+		li {
+			display: flex;
+
+			&[data-nc-current] {
+				pointer-events: none;
+			}
+
+			a {
+				display  : inline-flex;
+				min-width: var(--tab-min-width);
+
+				max-width    : var(--tab-max-width);
+				text-overflow: ellipsis;
+				white-space  : nowrap;
+				overflow     : hidden;
+			}
+		}
+	}
+
+	@media screen and (max-width: 599px) {  // for-ph-o
+		[data-nc-tab-bar] {
+			flex-direction: column;
+			li {
+				&[data-nc-current] {
+					pointer-events: auto;
+				}
+				a {
+					width    : 100%;
+					max-width: 100%;
+				}
+			}
+		}
+		[data-nc-tab-bar]:first-child {
+			li[data-nc-current] ~ li {
+				display: none;
+			}
+		}
+		[data-nc-tab-bar]:last-child {
+			li { display: none; }
+			li[data-nc-current] ~ li {
+				display: unset;
+			}
+		}
+	}
+}
+
+@mixin style-stack-decoration {
+	[data-nc-tab-bar] {
+		background-color: #eee;
+
+		&:first-child {
+			margin-bottom: 0;
+		}
+		&:last-child {
+			margin-top: 0;
+		}
+		li {
+			a {
+				padding: 0.25rem 0.5rem;
+			}
+			&:not([data-nc-current]) > a:hover {
+				background-color: #ddd;
+			}
+			&[data-nc-current] > a {
+				background-color: #ccc;
+			}
+		}
+	}
+	> div {
+		border: 1px solid #ddd;
+		background-color: #fefefe;
+		padding         : 2rem;
+
+		> *:first-child { margin-top: 0; }
+		> *:last-child { margin-bottom: 0; }
+	}
+}
