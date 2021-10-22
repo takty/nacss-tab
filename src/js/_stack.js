@@ -106,16 +106,6 @@ function createBar(hs, opts) {
 	return { ul, as };
 }
 
-function createAnchor(h) {
-	const a = document.createElement('a');
-	a.href = '#' + h.id;
-	a.innerHTML = h.elm.innerHTML;
-	a.querySelectorAll('small').forEach(e => e.remove());
-	a.querySelectorAll('a').forEach(e => e.remove());
-	a.title = a.innerText;
-	return a;
-}
-
 
 // -------------------------------------------------------------------------
 

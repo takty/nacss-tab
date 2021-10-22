@@ -3,7 +3,7 @@
  * Tab - Scroll (SCSS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-21
+ * @version 2021-10-22
  *
  */
 
@@ -33,6 +33,7 @@
 
 		li {
 			display: flex;
+			max-width: 100%;
 
 			a {
 				display  : inline-block;
@@ -48,19 +49,23 @@
 }
 
 @mixin style-scroll-decoration {
+	--bar-background        : #eee;
+	--bar-border-bottom     : 1px solid #ddd;
+	--tab-background-hover  : #ddd;
+	--tab-background-current: #ccc;
+	--tab-padding           : 0.25rem 0.5rem;
+
 	[data-nc-tab-bar] {
-		border-bottom   : 1px solid #ddd;
-		background-color: #eee;
+		background   : var(--bar-background);
+		border-bottom: var(--bar-border-bottom);
 
 		li {
-			a {
-				padding: 0.25rem 0.5rem;
-			}
+			a { padding: var(--tab-padding); }
 			&:not([data-nc-current]) > a:hover {
-				background-color: #ddd;
+				background: var(--tab-background-hover);
 			}
 			&[data-nc-current] > a {
-				background-color: #ccc;
+				background: var(--tab-background-current);
 			}
 		}
 	}

@@ -79,16 +79,6 @@ function createBar(hs, curH, opts) {
 	return { ul, as };
 }
 
-function createAnchor(h) {
-	const a = document.createElement('a');
-	a.href = '#' + h.id;
-	a.innerHTML = h.elm.innerHTML;
-	for (const ss of a.querySelectorAll('small')) ss.remove();
-	for (const ss of a.querySelectorAll('a')) ss.remove();
-	a.title = a.innerText;
-	return a;
-}
-
 
 // -------------------------------------------------------------------------
 

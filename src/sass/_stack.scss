@@ -1,11 +1,14 @@
 /**
  *
- * Tab Page Classes (SCSS)
+ * Tab - Stack (SCSS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-21
+ * @version 2021-10-22
  *
  */
+
+
+$phone-max-width: 599.5px;
 
 
 @mixin style-stack {
@@ -17,6 +20,11 @@
 	display       : flex;
 	flex-direction: column;
 
+	> * {
+		margin: 0;
+		box-sizing: border-box;
+	}
+
 	> div {
 		position      : absolute;
 		bottom        : 1000vh;
@@ -25,14 +33,11 @@
 		> * { opacity: 0; }
 	}
 	> div[data-nc-current] {
-		position  : static;
-		opacity   : 1;
-		flex-grow : 1;
+		position      : static;
+		flex-grow     : 1;
 		pointer-events: auto;
-		> * {
-			opacity: 1;
-			transition: opacity 0.2s;
-		}
+		opacity       : 1;
+		> * { opacity: 1; }
 	}
 
 	[data-nc-tab-bar] {
@@ -41,18 +46,19 @@
 		gap      : var(--tab-gap);
 
 		clear  : both;
-		z-index: 1;
 		padding: 0;
+		z-index: 1;
 
 		li {
 			display: flex;
+			max-width: 100%;
 
 			&[data-nc-current] {
 				pointer-events: none;
 			}
 
 			a {
-				display  : inline-flex;
+				display  : inline-block;
 				min-width: var(--tab-min-width);
 
 				max-width    : var(--tab-max-width);
@@ -63,13 +69,11 @@
 		}
 	}
 
-	@media screen and (max-width: 599px) {  // for-ph-o
+	@media screen and (max-width: $phone-max-width) {  // for Phone
 		[data-nc-tab-bar] {
 			flex-direction: column;
 			li {
-				&[data-nc-current] {
-					pointer-events: auto;
-				}
+				&[data-nc-current] { pointer-events: auto; }
 				a {
 					width    : 100%;
 					max-width: 100%;
@@ -77,45 +81,44 @@
 			}
 		}
 		[data-nc-tab-bar]:first-child {
-			li[data-nc-current] ~ li {
-				display: none;
-			}
+			li[data-nc-current] ~ li { display: none; }
 		}
 		[data-nc-tab-bar]:last-child {
 			li { display: none; }
-			li[data-nc-current] ~ li {
-				display: unset;
-			}
+			li[data-nc-current] ~ li { display: flex; }
 		}
 	}
 }
 
 @mixin style-stack-decoration {
-	[data-nc-tab-bar] {
-		background-color: #eee;
+	--bar-background        : #eee;
+	--tab-background-hover  : #ddd;
+	--tab-background-current: #ccc;
+	--tab-padding           : 0.25rem 0.5rem;
+	--page-border           : 1px solid #ddd;
+	--page-background       : #fefefe;
+	--page-padding          : 2rem;
 
-		&:first-child {
-			margin-bottom: 0;
-		}
-		&:last-child {
-			margin-top: 0;
-		}
+	[data-nc-tab-bar] {
+		background: var(--bar-background);
+
+		&:first-child { margin-bottom: 0; }
+		&:last-child { margin-top: 0; }
+
 		li {
-			a {
-				padding: 0.25rem 0.5rem;
-			}
+			a { padding: var(--tab-padding); }
 			&:not([data-nc-current]) > a:hover {
-				background-color: #ddd;
+				background: var(--tab-background-hover);
 			}
 			&[data-nc-current] > a {
-				background-color: #ccc;
+				background: var(--tab-background-current);
 			}
 		}
 	}
 	> div {
-		border: 1px solid #ddd;
-		background-color: #fefefe;
-		padding         : 2rem;
+		border    : var(--page-border);
+		background: var(--page-background);
+		padding   : var(--page-padding);
 
 		> *:first-child { margin-top: 0; }
 		> *:last-child { margin-bottom: 0; }

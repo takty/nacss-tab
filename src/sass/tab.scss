@@ -15,11 +15,6 @@
 div.tab-scroll {
 	@include scroll.style-scroll;
 	@include scroll.style-scroll-decoration;
-
-	div.tab-scroll > [data-nc-tab-bar] {
-		border-top: rgba(#777, 0.25);
-		background-color: rgba(#777, 0.1);
-	}
 }
 
 div.tab-stack {
