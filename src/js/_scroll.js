@@ -1,9 +1,9 @@
 /**
  *
- * Scroll (JS)
+ * Tab - Scroll (JS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-21
+ * @version 2021-10-22
  *
  */
 
@@ -85,6 +85,7 @@ function createAnchor(h) {
 	a.innerHTML = h.elm.innerHTML;
 	for (const ss of a.querySelectorAll('small')) ss.remove();
 	for (const ss of a.querySelectorAll('a')) ss.remove();
+	a.title = a.innerText;
 	return a;
 }
 

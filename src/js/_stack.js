@@ -1,202 +1,166 @@
 /**
  *
- * Stack (JS)
+ * Tab - Stack (JS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-21
+ * @version 2021-10-22
  *
  */
 
-
-const PAGE_WINDOW_HEIGHT_RATIO = 0.8;
-
-// let noFocus;
 
 function initialize(cs, opts = {}) {
 	if (cs.length === 0) return;
 
 	opts = Object.assign({
-		styleBar    : ':ncTabBar',
-		styleCurrent: ':ncCurrent',
-		styleActive : ':ncActive',
-		hashPrefix  : 'tst:',
+		styleBar      : ':ncTabBar',
+		styleCurrent  : ':ncCurrent',
+		styleActive   : ':ncActive',
+		hashPrefix    : 'tst:',
+		maxHeightRate : 0.8,
+		doRemoveHeader: false,
 	}, opts);
-
-
-	const tabPages = [];
+	const is = [];
 	for (let i = 0; i < cs.length; i += 1) {
-		tabPages.push(create(cs[i], i + 1, opts));
+		const inst = create(cs[i], i + 1, opts);
+		if (inst) is.push(inst);
 	}
-
-	onResize(() => onResizeAll(tabPages, opts), true);
-	setTimeout(() => {  // Delay
-		onResizeAll(tabPages, opts);
-		// onHash(tabPages, opts);
-	}, 200);
-	// window.addEventListener('hashchange', () => { onHash(tabPages, opts); });
-
-	const pn = window.location.pathname;
-	for (let i = 0; i < tabPages.length; i += 1) {
-		const cs = tabPages[i].tabs;
-		for (const c of cs) {
-			addAnchorJumpEvent(tabPages, c.dataset['id'] ? c.dataset['id'] : c.id, pn);
-		}
-	}
-
-	const h = location.hash;
-	if (h.indexOf('#') !== -1) {
-		const id = h.replace('#', '');
-		if (!id) return;
-		console.log(id);
-		// const tar = document.getElementById(id);
-		// if (inst.uls.indexOf(tar) !== 0) {
-		// 	inst.active = tar;
-		// }
-	}
-
+	onResize(() => is.forEach(resize), true);
+	window.addEventListener('hashchange', () => is.forEach(onHashChanged) );
 }
 
-function addAnchorJumpEvent(tps, id, pn) {
-	const as = document.querySelectorAll('a[href $= "#' + id + '"]');
-	console.log(as);
-	for (let i = 0; i < as.length; i += 1) {
-		const href = as[i].getAttribute('href');
-		if (href[0] !== '#') {
-			const url = href.substr(0, href.lastIndexOf('#'));
-			if (url.lastIndexOf(pn) !== url.length - pn.length) continue;
-		}
-		// as[i].addEventListener('click', () => { setTimeout(() => { onHash(tps, opts); }, 0); });
-	}
+function onHashChanged(inst) {
+	let idx = getCurrentPage(inst, location.hash);
+	if (idx === null) idx = getAnchorPage(inst, location.hash);
+	if (idx !== null) setTimeout(() => update(inst, idx), 10);
 }
 
-function create(container, contIdx, opts) {
-	const fh = getFirstHeading(container);
-	if (!fh) return false;
-	const tabH = fh.tagName;
+function create(cont, cid, opts) {
+	const inst = {
+		opts,
+		cont,
+		ps    : null,
+		bars  : [],
+		curIdx: 0,
+	};
+	const [hs, ps] = extractHeadersAndPages(cont, cid, opts);
+	if (hs.length === 0) return false;
+	inst.ps = ps;
 
-	const pages = [], htmls = [];
-	const cs = [].slice.call(container.children);
-	let curPage = null;
+	const bar0 = createBar(hs, opts);
+	const bar1 = createBar(hs, opts);
+	inst.bars.push(bar0, bar1);
 
-	for (let i = 0; i < cs.length; i += 1) {
-		const c = cs[i];
-		if (c.tagName === tabH) {
-			if (curPage) pages.push(curPage);
-			curPage = document.createElement('div');
-			container.removeChild(c);
-			htmls.push(c.innerHTML);
+	cont.insertBefore(bar0.ul, cont.firstChild);
+	for (const p of ps) cont.appendChild(p);
+	cont.appendChild(bar1.ul);
+
+	assignEvent(inst);
+	return inst;
+}
+
+
+// -------------------------------------------------------------------------
+
+
+function extractHeadersAndPages(cont, cid, opts) {
+	const fh = getFirstHeading(cont);
+	if (!fh) return [];
+	const tn = fh.tagName;
+	const hs = [];
+	const ps = [];
+	let curP = null;
+
+	for (const elm of Array.from(cont.children)) {
+		if (elm.tagName === tn) {
+			const id = `${opts.hashPrefix}${cid}-${hs.length + 1}`;
+			hs.push({ elm, id });
+
+			if (curP) ps.push(curP);
+			curP = document.createElement('div');
+			if (opts.doRemoveHeader) {
+				cont.removeChild(elm);
+			} else {
+				curP.appendChild(elm);
+			}
 		} else {
-			if (curPage) curPage.appendChild(c);
+			if (curP) curP.appendChild(elm);
 		}
 	}
-	if (curPage) pages.push(curPage);
-
-	const tp = { pages, container, currentIdx: 0, isAccordion: false, contIdx };
-	createTab(htmls, tp, opts);
-
-	container.insertBefore(tp.tabUl, container.firstChild);
-	for (const p of pages) container.appendChild(p);
-	container.appendChild(tp.tabUl2);
-
-	return tp;
+	if (curP) ps.push(curP);
+	return [hs, ps];
 }
 
-function createTab(htmls, tp, opts) {
-	tp.tabUl = document.createElement('ul');
-	for (let i = 0; i < htmls.length; i += 1) {
-		const a = createAnchor(opts.hashPrefix + (tp.contIdx) + '-' + (i + 1), htmls[i]);
+function createBar(hs, opts) {
+	const ul = document.createElement('ul');
+	ul.className = '';  // for Dummy
+	enableClass(true, ul, opts.styleBar);
+	const as = [];
+
+	for (const h of hs) {
+		const a = createAnchor(h);
 		const li = document.createElement('li');
 		li.appendChild(a);
-		tp.tabUl.appendChild(li);
+		ul.appendChild(li);
+		as.push(a);
 	}
-	enableClass(true, tp.tabUl, opts.styleBar);
-	tp.tabs = [].slice.call(tp.tabUl.children);
-
-	tp.tabUl2 = tp.tabUl.cloneNode(true);
-	enableClass(true, tp.tabUl2, opts.styleBar);
-	tp.tabs2 = [].slice.call(tp.tabUl2.children);
-	addTabEvent(tp, opts);
-
-	setTimeout(() => {
-		tp.isAccordion = getComputedStyle(tp.tabUl).flexDirection === 'column';
-		update(tp, tp.isAccordion ? -1 : 0, opts);
-	}, 10);
+	return { ul, as };
 }
 
-function createAnchor(id, html) {
+function createAnchor(h) {
 	const a = document.createElement('a');
-	a.href = '#' + id;
-	a.innerHTML = html;
-	for (const ss of a.querySelectorAll('small')) ss.remove();
-	for (const ss of a.querySelectorAll('a')) ss.remove();
+	a.href = '#' + h.id;
+	a.innerHTML = h.elm.innerHTML;
+	a.querySelectorAll('small').forEach(e => e.remove());
+	a.querySelectorAll('a').forEach(e => e.remove());
+	a.title = a.innerText;
 	return a;
 }
 
-function addTabEvent(tp, opts) {
-	const ts  = tp.tabs;
-	const ts2 = tp.tabs2;
 
-	for (let i = 0; i < ts.length; i += 1) {
-		const f = (function (idx) {
-			return (e) => {
-				onClick(e, tp, idx, opts);
-			};
-		})(i);
-		ts[i].addEventListener('click', f);
-		ts2[i].addEventListener('click', f);
-		// ts[i].addEventListener('keypress',  (e) => { if (e.keyCode === 13) f(e); });
-		// ts2[i].addEventListener('keypress', (e) => { if (e.keyCode === 13) f(e); });
+// -------------------------------------------------------------------------
+
+
+function assignEvent(inst) {
+	for (const bar of inst.bars) {
+		bar.as.forEach((a, i) => {
+			a.addEventListener('click', (e) => onClick(e, inst, i));
+		});
 	}
+	const h = location.hash;
+	let idx = getCurrentPage(inst, h);
+	if (idx === null) idx = getAnchorPage(inst, h);
+	if (idx === null) idx = isAccordion(inst) ? -1 : 0;
+	setTimeout(() => update(inst, idx), 10);
 }
 
-// function onHash(tps, opts) {
-// 	// console.log(window.location.hash);
-// 	const [hCont, hPage] = extractIndexFromHash(window.location.hash, opts);
-// 	if (hCont === null) {
-// 		for (let i = 0; i < tps.length; i += 1) {
-// 			if (!tps[i]) continue;
-// 			update(tps[i], tps[i].isAccordion ? -1 : 0, opts);
-// 		}
-// 	} else {
-// 		update(tps[hCont], hPage, opts);
-// 	}
-// }
-
-function onClick(e, tp, idx, opts) {
-	// e.preventDefault();
-	// if (!tp.isAccordion && tp.currentIdx === idx) {
-	// 	window.location.hash = null;
-	// 	return;
-	// }
+function onClick(e, inst, idx) {
 	e.preventDefault();
-	e.stopPropagation();
 	if (getComputedStyle(e.target.parentElement).pointerEvents === 'none') return;
-	if (tp.currentIdx === idx) {
-		// console.log('close');
-		// window.location.hash = '';
-		// history.pushState({}, null, '');
+	let url = e.target.href;
+	if (inst.curIdx === idx) {
 		idx = -1;
-		// return;
+		url = url.replace(/#.*$/, '');
 	}
-	const hash = opts.hashPrefix + (tp.contIdx) + '-' + (idx + 1);
-	const url = '#' + (idx === -1 ? '' : (opts.hashPrefix + hash));
 	history.pushState({}, null, url);
-
-	update(tp, idx, opts);
-	// scrollToTab(tp);
-	// // pushTabState(tp, opts);
-	// if (!tp.isAccordion) resizeTab(tp, true, opts);
+	update(inst, idx);
+	scrollToTab(inst);
 }
 
-function scrollToTab(tp) {
-	if (tp.currentIdx === -1) return;
+function isAccordion(inst) {
+	return getComputedStyle(inst.bars[0].ul).flexDirection === 'column';
+}
+
+function scrollToTab(inst) {
+	if (inst.curIdx === -1) return;
 	setTimeout(() => {
-		const bcr  = tp.tabUl.getBoundingClientRect();
-		if (0 <= bcr.top && bcr.top <= window.innerHeight && 0 <= bcr.bottom && bcr.bottom <= window.innerHeight) return;
-		const bcr2 = tp.tabUl2.getBoundingClientRect();
-		if (tp.isAccordion || (bcr2.top < 0 || window.innerHeight < bcr2.bottom)) {
-			// const tar = tp.tabUl.firstChild.querySelector('[data-stile~="anchor-offset"]');
-			// NS.jumpToElement(tar ? tar : tp.tabUl, 200, false);
+		const [{ ul: ul0 }, { ul: ul1 }] = inst.bars;
+		const r0 = ul0.getBoundingClientRect();
+		if (0 <= r0.top && r0.top <= window.innerHeight && 0 <= r0.bottom && r0.bottom <= window.innerHeight) {
+			return;
+		}
+		const r1 = ul1.getBoundingClientRect();
+		if (isAccordion(inst) || (r1.top < 0 || window.innerHeight < r1.bottom)) {
+			inst.cont.scrollIntoView({ behavior: 'smooth' });
 		}
 	}, 10);
 }
@@ -205,126 +169,71 @@ function scrollToTab(tp) {
 // -------------------------------------------------------------------------
 
 
-function extractIndexFromHash(hash, opts) {
-	if (hash.indexOf('#' + opts.hashPrefix) !== 0) return [null, null];
-	const cp = hash.replace('#' + opts.hashPrefix, '').split('-');
-	if (cp.length !== 2) return [null, null];
-	return [parseInt(cp[0]) - 1, parseInt(cp[1]) - 1];
+function getCurrentPage(inst, hash) {
+	if (hash.indexOf('#') === -1) return null;
+	const re = new RegExp(hash + '$', 'g');
+	const as = inst.bars[0].as;
+	for (let i = 0; i < as.length; i += 1) {
+		if (as[i].href.match(re)) return i;
+	}
+	return null;
+}
+
+function getAnchorPage(inst, hash) {
+	const id = hash.replace('#', '');
+	const tar = document.getElementById(id);
+	if (!tar) return null;
+	for (let i = 0; i < inst.ps.length; i += 1) {
+		if (inst.ps[i].contains(tar)) {
+			return i;
+		}
+	}
+	return null;
 }
 
 
 // -------------------------------------------------------------------------
 
 
-function update(tp, idx, opts) {
-	// if (tp.isAccordion) {
-	// 	idx = tp.currentIdx === idx ? -1 : idx;
-	// 	// updateAccordion(tp, idx);
-	// }
-	// updateTab(tp, idx, opts);
-	const ts  = tp.tabs;
-	const ts2 = tp.tabs2;
-	const ps  = tp.pages;
+function update(inst, idx) {
+	const ps = inst.ps;
+	const [{ as: a0 }, { as: a1 }] = inst.bars;
 
-	for (let i = 0; i < ts.length; i += 1) {
-		enableClass(i === idx, ts[i],  opts.styleCurrent);
-		enableClass(i === idx, ts2[i], opts.styleCurrent);
-		enableClass(i === idx, ps[i],  opts.styleCurrent);
+	for (let i = 0; i < ps.length; i += 1) {
+		enableClass(i === idx, a0[i].parentElement, inst.opts.styleCurrent);
+		enableClass(i === idx, a1[i].parentElement, inst.opts.styleCurrent);
+		enableClass(i === idx, ps[i], inst.opts.styleCurrent);
 	}
-	tp.currentIdx = idx;
+	inst.curIdx = idx;
 }
-
-// function updateAccordion(tp, idx) {
-	// const ts = tp.tabs, ts2 = tp.tabs2;
-
-	// if (idx === -1) {
-	// 	for (let i = 0; i < ts.length; i += 1) {
-	// 		ts[i].style.display  = '';
-	// 		ts2[i].style.display = 'none';
-	// 	}
-	// } else {
-	// 	for (let i = 0; i < ts.length; i += 1) {
-	// 		ts[i].style.display  = (i <= idx) ? '' : 'none';
-	// 		ts2[i].style.display = (i > idx)  ? 'flex' : 'none';
-	// 	}
-	// }
-// }
-
-// function updateTab(tp, idx, opts) {
-// 	const ts = tp.tabs, ts2 = tp.tabs2;
-// 	const ps = tp.pages;
-
-// 	for (let i = 0; i < ts.length; i += 1) {
-// 		enableClass(i === idx, ts[i],  opts.styleCurrent);
-// 		enableClass(i === idx, ts2[i], opts.styleCurrent);
-// 		enableClass(i === idx, ps[i],  opts.styleCurrent);
-// 	}
-// 	tp.currentIdx = idx;
-// }
 
 
 // -------------------------------------------------------------------------
 
 
-function onResizeAll(tps, opts) {
-	for (let i = 0; i < tps.length; i += 1) {
-		if (!tps[i]) continue;
-		resizeOne(tps[i], opts);
-	}
-}
-
-function resizeOne(tp, opts) {
-	const cont = tp.container;
-	tp.isAccordion = getComputedStyle(tp.tabUl2).flexDirection === 'column';
-
-	if (tp.isAccordion) {
+function resize(inst) {
+	const cont = inst.cont;
+	if (isAccordion(inst)) {
 		cont.style.minHeight = '';
 	} else {
-		const minH = getMinHeight(tp);
-		const h = (minH < window.innerHeight * PAGE_WINDOW_HEIGHT_RATIO) ? (minH + 'px') : '';
+		const minH = getMinHeight(inst);
+		const h = (minH < window.innerHeight * inst.opts.maxHeightRate) ? `${minH}px` : '';
 		cont.style.minHeight = h;
 
-		if (tp.currentIdx === -1) {
-			update(tp, 0, opts);
+		if (inst.curIdx === -1) {
+			update(inst, 0);
 		}
 	}
 }
 
-// function resizeAccordion(tp, prevIsAccordion, opts) {
-// 	const cont = tp.container;
-// 	cont.style.minHeight = '';
-// 	// cont.style.height    = '';
-// 	// if (prevIsAccordion !== tp.isAccordion) updateTab(tp, -1, opts);
-// 	// updateAccordion(tp, tp.currentIdx);
-// }
+function getMinHeight(inst) {
+	const [{ ul: ul0 }, { ul: ul1 }] = inst.bars;
 
-// function resizeTab(tp, suppressTabClick, opts) {
-// 	const cont = tp.container;
-// 	const minH = getMinHeight(tp);
-
-// 	const h = (minH < window.innerHeight * PAGE_WINDOW_HEIGHT_RATIO) ? (minH + 'px') : '';
-// 	cont.style.minHeight = h;
-// 	// cont.style.height    = h;
-
-// 	// const ts = tp.tabs, ts2 = tp.tabs2;
-
-// 	// for (let i = 0; i < ts.length; i += 1) {
-// 	// 	ts[i].style.display  = '';
-// 	// 	ts2[i].style.display = '';
-// 	// }
-// 	if (tp.currentIdx === -1) tp.currentIdx = 0;
-// 	if (!suppressTabClick) update(tp, tp.currentIdx, opts);
-// }
-
-function getMinHeight(tp) {
-	const tabUl  = tp.tabUl;
-	const tabUl2 = tp.tabUl2;
-
-	let marginBtm = parseInt(getComputedStyle(tabUl).marginBottom);
-	let marginTop = parseInt(getComputedStyle(tabUl2).marginTop);
+	let marginBtm = parseInt(getComputedStyle(ul0).marginBottom);
+	let marginTop = parseInt(getComputedStyle(ul1).marginTop);
 	let height = 0;
 
-	for (const p of tp.pages) {
+	for (const p of inst.ps) {
 		const ps = getComputedStyle(p);
 		const mt = parseInt(ps.marginTop);
 		const mb = parseInt(ps.marginBottom);
@@ -334,5 +243,5 @@ function getMinHeight(tp) {
 		marginTop = Math.max(marginTop, mb);
 		height    = Math.max(height, h);
 	}
-	return tabUl.offsetHeight + tabUl2.offsetHeight + marginBtm + marginTop + height;
+	return ul0.offsetHeight + ul1.offsetHeight + marginBtm + marginTop + height;
 }
