@@ -1,4 +1,16 @@
 html {
-	scroll-behavior: smooth;
-	scroll-padding-top: 100px;
+	scroll-behavior   : smooth;
+	scroll-padding-top: 8rem;
+
+	font-family: sans-serif;
+}
+
+header {
+	position: sticky;
+	top     : 0;
+	z-index : 1;
+	height  : 6rem;
+
+	border         : 1px solid #ddd;
+	backdrop-filter: blur(4px);
 }
