@@ -3,7 +3,7 @@
  * Tab - Stack (SCSS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-22
+ * @version 2021-10-23
  *
  */
 
@@ -17,6 +17,7 @@ $phone-max-width: 599.5px;
 	--tab-max-width: 30vw;
 
 	position      : relative;
+	z-index       : 0;
 	display       : flex;
 	flex-direction: column;
 
