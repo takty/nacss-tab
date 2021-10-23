@@ -3,7 +3,7 @@
  * Tab - Scroll (JS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-22
+ * @version 2021-10-23
  *
  */
 
@@ -17,10 +17,23 @@ function initialize(cs, opts = {}) {
 		styleActive : ':ncActive',
 		hashPrefix  : 'tsc:',
 	}, opts);
+	const is = [];
 	for (let i = 0; i < cs.length; i += 1) {
-		create(cs[i], i + 1, opts);
+		const inst = create(cs[i], i + 1, opts);
+		if (inst) is.push(inst);
 	}
+	window.addEventListener('hashchange', () => is.forEach(onHashChanged));
 }
+
+function onHashChanged(inst) {
+	const tar = getCurrentByHash(inst, location.hash);
+	if (tar) inst.active = tar;
+	setTimeout(() => update(inst), 10);
+}
+
+
+// -------------------------------------------------------------------------
+
 
 function create(cont, cid, opts) {
 	const inst = {
@@ -40,6 +53,21 @@ function create(cont, cid, opts) {
 		inst.uls.push(bar.ul);
 	}
 	assignEvent(inst, bars);
+
+	inst.active = getCurrentByHash(inst, location.hash);
+	setTimeout(() => update(inst), 10);
+	return inst;
+}
+
+function getCurrentByHash(inst, hash) {
+	const id = hash.replace('#', '');
+	if (id) {
+		const tar = document.getElementById(id);
+		if (tar && inst.uls.indexOf(tar) !== 0) {
+			return tar;
+		}
+	}
+	return null;
 }
 
 
@@ -93,22 +121,10 @@ function assignEvent(inst, bars) {
 		inst.vs = vs;
 		update(inst);
 	}, true, { targets: inst.uls, marginTop: 'OFFSET', threshold: 0 });
-
-	const h = location.hash;
-	if (h.indexOf('#') !== -1) {
-		const id = h.replace('#', '');
-		if (!id) return;
-		const tar = document.getElementById(id);
-		if (inst.uls.indexOf(tar) !== 0) {
-			inst.active = tar;
-		}
-	}
-	setTimeout(() => update(inst), 10);
 }
 
 function onClick(inst, clicked) {
 	inst.active = clicked;
-	setTimeout(() => update(inst), 10);
 	setTimeout(() => {
 		if (inst.active) {
 			const y = inst.active.getBoundingClientRect().top;
