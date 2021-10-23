@@ -3,7 +3,7 @@
  * Tab - Stack (JS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-22
+ * @version 2021-10-23
  *
  */
 
@@ -26,13 +26,25 @@ function initialize(cs, opts = {}) {
 	}
 	onResize(() => is.forEach(resize), true);
 	window.addEventListener('hashchange', () => is.forEach(onHashChanged) );
+
+	setTimeout(() => {
+		const hash = location.hash.replace('#', '');
+		if (hash) {
+			const tar = document.getElementById(hash);
+			if (tar) tar.scrollIntoView({ behavior: 'smooth' });
+		}
+	}, 10);
 }
 
 function onHashChanged(inst) {
-	let idx = getCurrentPage(inst, location.hash);
+	let idx = getCurrentByHash(inst, location.hash);
 	if (idx === null) idx = getAnchorPage(inst, location.hash);
 	if (idx !== null) setTimeout(() => update(inst, idx), 10);
 }
+
+
+// -------------------------------------------------------------------------
+
 
 function create(cont, cid, opts) {
 	const inst = {
@@ -55,7 +67,35 @@ function create(cont, cid, opts) {
 	cont.appendChild(bar1.ul);
 
 	assignEvent(inst);
+
+	const h = location.hash;
+	let idx = getCurrentByHash(inst, h);
+	if (idx === null) idx = getAnchorPage(inst, h);
+	if (idx === null) idx = isAccordion(inst) ? -1 : 0;
+	setTimeout(() => update(inst, idx), 10);
 	return inst;
+}
+
+function getCurrentByHash(inst, hash) {
+	if (hash.indexOf('#') === -1) return null;
+	const re = new RegExp(hash + '$', 'g');
+	const as = inst.bars[0].as;
+	for (let i = 0; i < as.length; i += 1) {
+		if (as[i].href.match(re)) return i;
+	}
+	return null;
+}
+
+function getAnchorPage(inst, hash) {
+	const id = hash.replace('#', '');
+	const tar = document.getElementById(id);
+	if (!tar) return null;
+	for (let i = 0; i < inst.ps.length; i += 1) {
+		if (inst.ps[i].contains(tar)) {
+			return i;
+		}
+	}
+	return null;
 }
 
 
@@ -116,11 +156,6 @@ function assignEvent(inst) {
 			a.addEventListener('click', (e) => onClick(e, inst, i));
 		});
 	}
-	const h = location.hash;
-	let idx = getCurrentPage(inst, h);
-	if (idx === null) idx = getAnchorPage(inst, h);
-	if (idx === null) idx = isAccordion(inst) ? -1 : 0;
-	setTimeout(() => update(inst, idx), 10);
 }
 
 function onClick(e, inst, idx) {
@@ -154,36 +189,6 @@ function scrollToTab(inst) {
 		}
 	}, 10);
 }
-
-
-// -------------------------------------------------------------------------
-
-
-function getCurrentPage(inst, hash) {
-	if (hash.indexOf('#') === -1) return null;
-	const re = new RegExp(hash + '$', 'g');
-	const as = inst.bars[0].as;
-	for (let i = 0; i < as.length; i += 1) {
-		if (as[i].href.match(re)) return i;
-	}
-	return null;
-}
-
-function getAnchorPage(inst, hash) {
-	const id = hash.replace('#', '');
-	const tar = document.getElementById(id);
-	if (!tar) return null;
-	for (let i = 0; i < inst.ps.length; i += 1) {
-		if (inst.ps[i].contains(tar)) {
-			return i;
-		}
-	}
-	return null;
-}
-
-
-// -------------------------------------------------------------------------
-
 
 function update(inst, idx) {
 	const ps = inst.ps;
