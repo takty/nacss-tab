@@ -3,7 +3,7 @@
  * Common Functions
  *
  * @author Takuto Yanagida
- * @version 2021-10-22
+ * @version 2021-10-23
  *
  */
 
@@ -18,10 +18,28 @@ function getFirstHeading(container) {
 
 function createAnchor(h) {
 	const a = document.createElement('a');
-	a.href = '#' + h.id;
-	a.innerHTML = h.elm.innerHTML;
+	a.href  = '#' + h.id;
+	a.title = h.elm.innerText;
+	const t = h.elm.title ? h.elm.title : h.elm.innerHTML;
+
+	a.innerHTML = t;
 	a.querySelectorAll('small').forEach(e => e.remove());
-	a.querySelectorAll('a').forEach(e => e.remove());
-	a.title = a.innerText;
+	if (a.innerText === '') {
+		a.innerHTML = t;
+	}
+	spanning(a);
 	return a;
+}
+
+function spanning(e) {
+	for (const c of Array.from(e.children)) {
+		if (c.tagName === 'A' || c.tagName === 'SMALL') {
+			const s = document.createElement('span');
+			s.innerHTML = c.innerHTML;
+			e.replaceChild(s, c);
+			spanning(s);
+		} else {
+			spanning(c);
+		}
+	}
 }
