@@ -27,7 +27,7 @@ function initialize(cs, opts = {}) {
 
 function onHashChanged(inst) {
 	const tar = getCurrentByHash(inst, location.hash);
-	if (tar) inst.active = tar;
+	inst.active = tar;
 	setTimeout(() => update(inst), 10);
 }
 
