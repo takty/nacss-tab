@@ -28,9 +28,9 @@ function initialize(cs, opts = {}) {
 	window.addEventListener('hashchange', () => is.forEach(onHashChanged) );
 
 	setTimeout(() => {
-		const hash = location.hash.replace('#', '');
-		if (hash) {
-			const tar = document.getElementById(hash);
+		const id = location.hash.replace('#', '');
+		if (id !== '') {
+			const tar = document.getElementById(id);
 			if (tar) tar.scrollIntoView({ behavior: 'smooth' });
 		}
 	}, 10);
@@ -88,11 +88,11 @@ function getCurrentByHash(inst, hash) {
 
 function getAnchorPage(inst, hash) {
 	const id = hash.replace('#', '');
-	const tar = document.getElementById(id);
-	if (!tar) return null;
-	for (let i = 0; i < inst.ps.length; i += 1) {
-		if (inst.ps[i].contains(tar)) {
-			return i;
+	if (id !== '') {
+		const tar = document.getElementById(id);
+		if (tar) {
+			const idx = inst.ps.findIndex(p => p.contains(tar));
+			if (idx !== -1) return idx;
 		}
 	}
 	return null;

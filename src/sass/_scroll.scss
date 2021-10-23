@@ -3,7 +3,7 @@
  * Tab - Scroll (SCSS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-22
+ * @version 2021-10-23
  *
  */
 
@@ -11,7 +11,6 @@
 @mixin style-scroll {
 	--bar-margin-top      : 4rem;
 	--bar-inactive-opacity: 0.5;
-	--tab-gap             : 0.25rem 1rem;
 	--tab-min-width       : 2rem;
 	--tab-max-width       : 30vw;
 
@@ -20,7 +19,6 @@
 
 		display  : flex;
 		flex-wrap: wrap;
-		gap      : var(--tab-gap);
 
 		clear  : both;
 		padding: 0;
@@ -51,11 +49,13 @@
 @mixin style-scroll-decoration {
 	--bar-background        : #eee;
 	--bar-border-bottom     : 1px solid #ddd;
+	--tab-gap               : 0.25rem 1rem;
+	--tab-padding           : 0.25rem 0.5rem;
 	--tab-background-hover  : #ddd;
 	--tab-background-current: #ccc;
-	--tab-padding           : 0.25rem 0.5rem;
 
 	[data-nc-tab-bar] {
+		gap          : var(--tab-gap);
 		background   : var(--bar-background);
 		border-bottom: var(--bar-border-bottom);
 

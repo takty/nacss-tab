@@ -12,7 +12,6 @@ $phone-max-width: 599.5px;
 
 
 @mixin style-stack {
-	--tab-gap      : 0.25rem 1rem;
 	--tab-min-width: 2rem;
 	--tab-max-width: 30vw;
 
@@ -44,7 +43,6 @@ $phone-max-width: 599.5px;
 	[data-nc-tab-bar] {
 		display  : flex;
 		flex-wrap: wrap;
-		gap      : var(--tab-gap);
 
 		clear  : both;
 		padding: 0;
@@ -93,14 +91,16 @@ $phone-max-width: 599.5px;
 
 @mixin style-stack-decoration {
 	--bar-background        : #eee;
+	--tab-gap               : 0.25rem 1rem;
+	--tab-padding           : 0.25rem 0.5rem;
 	--tab-background-hover  : #ddd;
 	--tab-background-current: #ccc;
-	--tab-padding           : 0.25rem 0.5rem;
 	--page-border           : 1px solid #ddd;
 	--page-background       : #fefefe;
 	--page-padding          : 2rem;
 
 	[data-nc-tab-bar] {
+		gap       : var(--tab-gap);
 		background: var(--bar-background);
 
 		&:first-child { margin-bottom: 0; }

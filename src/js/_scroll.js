@@ -61,7 +61,7 @@ function create(cont, cid, opts) {
 
 function getCurrentByHash(inst, hash) {
 	const id = hash.replace('#', '');
-	if (id) {
+	if (id !== '') {
 		const tar = document.getElementById(id);
 		if (tar && inst.uls.indexOf(tar) !== 0) {
 			return tar;
@@ -120,7 +120,7 @@ function assignEvent(inst, bars) {
 	onIntersect((vs) => {
 		inst.vs = vs;
 		update(inst);
-	}, true, { targets: inst.uls, marginTop: 'OFFSET', threshold: 0 });
+	}, inst.uls, 0);
 }
 
 function onClick(inst, clicked) {
