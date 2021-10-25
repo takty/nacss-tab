@@ -3,7 +3,7 @@
  * Utilities
  *
  * @author Takuto Yanagida
- * @version 2021-10-23
+ * @version 2021-10-25
  *
  */
 
@@ -25,6 +25,23 @@ function enableClass(enabled, tar, cls) {
 
 	}
 }
+
+function getSelector(cls) {
+	if (cls.startsWith(':')) {
+		return `*[data-${cls.substr(1).replace(/([A-Z])/g, c => '-' + c.charAt(0).toLowerCase())}]`;
+	} else {
+		return `*${cls}`;
+	}
+}
+
+function getScrollOffset() {
+	const s = getComputedStyle(document.getElementsByTagName('html')[0]);
+	return parseInt(s.scrollPaddingTop);
+}
+
+
+// -----------------------------------------------------------------------------
+
 
 function throttle(fn) {
 	let isRunning;
@@ -51,6 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	}, { passive: true });
 });
 
+
+// -----------------------------------------------------------------------------
+
+
 function onIntersect(fn, targets, threshold) {
 	const vs = Array(targets.length).fill(false);
 	const tm = new Map();
@@ -68,8 +89,7 @@ function onIntersect(fn, targets, threshold) {
 	let io = null;
 	let st = null;
 	onResize(() => {
-		const s = getComputedStyle(document.getElementsByTagName('html')[0]);
-		mt = -parseInt(s.scrollPaddingTop);
+		mt = -getScrollOffset();
 		if (st) clearTimeout(st);
 		st = setTimeout(() => {
 			if (io) io.disconnect();
