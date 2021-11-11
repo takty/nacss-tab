@@ -93,13 +93,13 @@ function createBar(hs, curH, opts) {
 	const ul = document.createElement('ul');
 	ul.id = curH.id;
 	ul.className = '';  // for Dummy
-	enableClass(true, ul, opts.styleBar);
+	setClass(ul, opts.styleBar);
 	const as = [];
 
 	for (const h of hs) {
 		const a = createAnchor(h);
 		const li = document.createElement('li');
-		if (h === curH) enableClass(true, li, opts.styleCurrent);
+		if (h === curH) setClass(li, opts.styleCurrent);
 		li.appendChild(a);
 		ul.appendChild(li);
 		as.push(a);
@@ -137,7 +137,7 @@ function onClick(inst, clicked) {
 function update(inst) {
 	const tar = inst.active ? inst.active : getFirstVisible(inst);
 	for (const ul of inst.uls) {
-		enableClass(ul === tar, ul, inst.opts.styleActive);
+		setClass(ul, inst.opts.styleActive, ul === tar);
 	}
 }
 

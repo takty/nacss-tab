@@ -133,7 +133,7 @@ function extractHeadersAndPages(cont, cid, opts) {
 function createBar(hs, opts) {
 	const ul = document.createElement('ul');
 	ul.className = '';  // for Dummy
-	enableClass(true, ul, opts.styleBar);
+	setClass(ul, opts.styleBar);
 	const as = [];
 
 	for (const h of hs) {
@@ -195,9 +195,9 @@ function update(inst, idx) {
 	const [{ as: a0 }, { as: a1 }] = inst.bars;
 
 	for (let i = 0; i < ps.length; i += 1) {
-		enableClass(i === idx, a0[i].parentElement, inst.opts.styleCurrent);
-		enableClass(i === idx, a1[i].parentElement, inst.opts.styleCurrent);
-		enableClass(i === idx, ps[i], inst.opts.styleCurrent);
+		setClass(a0[i].parentElement, inst.opts.styleCurrent, i === idx);
+		setClass(a1[i].parentElement, inst.opts.styleCurrent, i === idx);
+		setClass(ps[i], inst.opts.styleCurrent, i === idx);
 	}
 	inst.curIdx = idx;
 }

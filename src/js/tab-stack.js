@@ -3,7 +3,7 @@
  * Tab Style - Stack (JS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-19
+ * @version 2021-11-11
  *
  */
 
@@ -16,6 +16,7 @@ window['NACSS'] = window['NACSS'] || {};
 	// @include _stack.js
 	NS.tabStack = initialize;
 
+	// @include _style-class.js
 	// @include _common.js
 	// @include _utilities.js
 

@@ -3,7 +3,7 @@
  * Tab Style - Scroll (JS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-19
+ * @version 2021-11-11
  *
  */
 
@@ -16,7 +16,8 @@ window['NACSS'] = window['NACSS'] || {};
 	// @include _scroll.js
 	NS.tabScroll = initialize;
 
-	// @include _common.js
+	// @include _style-class.js
 	// @include _utilities.js
+	// @include _common.js
 
 })(window['NACSS']);
