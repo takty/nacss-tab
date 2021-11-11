@@ -3,7 +3,7 @@
  * Tab - Stack (SCSS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-23
+ * @version 2021-11-11
  *
  */
 
@@ -89,7 +89,11 @@ $phone-max-width: 599.5px;
 	}
 }
 
-@mixin style-stack-decoration {
+
+// -----------------------------------------------------------------------------
+
+
+@mixin style-stack-decoration-bar {
 	--bar-background        : #eee;
 	--tab-gap               : 0.25rem 1rem;
 	--tab-padding           : 0.25rem 0.5rem;
@@ -123,5 +127,96 @@ $phone-max-width: 599.5px;
 
 		> *:first-child { margin-top: 0; }
 		> *:last-child { margin-bottom: 0; }
+	}
+}
+
+@mixin style-stack-decoration-tab {
+	--bar-background        : #eee;
+	--tab-border-top        : 1px solid #ddd;
+	--tab-border-inline     : 1px solid #ddd;
+	--tab-border-bottom     : 1px dashed #ddd;
+	--tab-gap               : 0.25rem 1rem;
+	--tab-padding           : 0.25rem 0.5rem;
+	--tab-background-hover  : #ddd;
+	--tab-background-current: #fff;
+	--page-border           : 1px solid #ddd;
+	--page-background       : #fefefe;
+	--page-padding          : 2rem;
+
+	[data-nc-tab-bar] {
+		gap       : var(--tab-gap);
+		background: var(--bar-background);
+
+		&:first-child { margin-bottom: 0; }
+		&:last-child { margin-top: 0; }
+
+		li {
+			a { padding: var(--tab-padding); }
+
+			&:not([data-nc-current]) > a:hover,
+			&[data-nc-current] > a {
+				position: relative;
+			}
+
+			&:not([data-nc-current]) > a:hover {
+				background: var(--tab-background-hover);
+			}
+			&[data-nc-current] > a {
+				background: var(--tab-background-current);
+
+				border-inline: var(--tab-border-inline);
+			}
+		}
+	}
+	[data-nc-tab-bar]:first-child {
+		li {
+			&:not([data-nc-current]) > a:hover,
+			&[data-nc-current] > a {
+				bottom: -1px;
+			}
+			&[data-nc-current] > a {
+				border-top   : var(--tab-border-top);
+				border-bottom: var(--tab-border-bottom);
+			}
+		}
+	}
+	[data-nc-tab-bar]:last-child {
+		li {
+			&:not([data-nc-current]) > a:hover,
+			&[data-nc-current] > a {
+				top: -1px;
+			}
+			&[data-nc-current] > a {
+				border-bottom: var(--tab-border-top);
+				border-top   : var(--tab-border-bottom);
+			}
+		}
+	}
+	> div {
+		border    : var(--page-border);
+		background: var(--page-background);
+		padding   : var(--page-padding);
+
+		> *:first-child { margin-top: 0; }
+		> *:last-child { margin-bottom: 0; }
+	}
+}
+
+
+// -----------------------------------------------------------------------------
+
+
+@mixin style-stack-print {
+	--bar-print-scale: 0.75;
+
+	[data-nc-tab-bar] {
+		transform: scale(var(--bar-print-scale));
+		width    : calc(1 / var(--bar-print-scale) * 100%);
+	}
+	[data-nc-tab-bar]:first-child {
+		transform-origin: bottom left;
+	}
+	[data-nc-tab-bar]:last-child {
+		transform-origin: top left;
 	}
 }

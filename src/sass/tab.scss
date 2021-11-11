@@ -3,7 +3,7 @@
  * Tab Style
  *
  * @author Takuto Yanagida
- * @version 2021-10-21
+ * @version 2021-11-11
  *
  */
 
@@ -14,10 +14,18 @@
 
 div.tab-scroll {
 	@include scroll.style-scroll;
-	@include scroll.style-scroll-decoration;
+	@include scroll.style-scroll-decoration-tab;
+
+	@media print {
+		@include scroll.style-scroll-print
+	}
 }
 
 div.tab-stack {
 	@include stack.style-stack;
-	@include stack.style-stack-decoration;
+	@include stack.style-stack-decoration-tab;
+
+	@media print {
+		@include stack.style-stack-print
+	}
 }
