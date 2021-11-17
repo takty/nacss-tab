@@ -12,12 +12,30 @@ main {
 }
 
 header {
-	position: sticky;
-	top     : 0;
-	z-index : 1;
-	height  : 6rem;
+	position  : sticky;
+	top       : 0;
+	z-index   : 1;
+	min-height: 6rem;
 
 	border          : 1px solid #ddd;
 	background-color: rgba(#fff, 0.5);
 	backdrop-filter : blur(4px);
+}
+
+main {
+	margin-top: 2rem;
+}
+
+main {
+	*:first-child:not(:where(.aligncenter, .alignwide, .alignfull)) {  // 0, 1, 0
+		margin-block-start: 0;
+	}
+
+	*:first-child:where(.alignright, .alignleft) + * {  // 0, 1, 0
+		margin-block-start: 0;
+	}
+
+	*:last-child:not(:where(.alignright, .alignleft, .aligncenter, .alignwide, .alignfull))  {  // 0, 1, 0
+		margin-block-end: 0;
+	}
 }
