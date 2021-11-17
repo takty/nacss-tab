@@ -1,6 +1,6 @@
 /**
  *
- * Tab Style - Stack (JS)
+ * Tab Stack
  *
  * @author Takuto Yanagida
  * @version 2021-11-11

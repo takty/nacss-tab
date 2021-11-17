@@ -1,9 +1,9 @@
 /**
  *
- * Tab Style
+ * Tab
  *
  * @author Takuto Yanagida
- * @version 2021-11-11
+ * @version 2021-11-17
  *
  */
 
@@ -12,20 +12,32 @@
 @use 'stack';
 
 
+:root {
+	@include scroll.custom-property;
+	@include scroll.custom-property-appearance-bar;
+	// @include scroll.custom-property-appearance-tab;
+
+	@include stack.custom-property;
+	@include stack.custom-property-appearance-bar;
+	// @include stack.custom-property-appearance-tab;
+}
+
 div.tab-scroll {
-	@include scroll.style-scroll;
-	@include scroll.style-scroll-decoration-tab;
+	@include scroll.main;
+	@include scroll.appearance-bar;
+	// @include scroll.appearance-tab;
 
 	@media print {
-		@include scroll.style-scroll-print
+		@include scroll.print;
 	}
 }
 
 div.tab-stack {
-	@include stack.style-stack;
-	@include stack.style-stack-decoration-tab;
+	@include stack.main;
+	@include stack.appearance-bar;
+	// @include stack.appearance-tab;
 
 	@media print {
-		@include stack.style-stack-print
+		@include stack.print
 	}
 }

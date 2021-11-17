@@ -1,6 +1,6 @@
 /**
  *
- * Tab - Scroll (JS)
+ * Scroll
  *
  * @author Takuto Yanagida
  * @version 2021-10-23

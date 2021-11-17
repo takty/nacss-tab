@@ -1,6 +1,6 @@
 /**
  *
- * Tab Style (JS)
+ * Tab
  *
  * @author Takuto Yanagida
  * @version 2021-11-11
