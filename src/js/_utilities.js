@@ -3,7 +3,7 @@
  * Utilities
  *
  * @author Takuto Yanagida
- * @version 2021-11-11
+ * @version 2021-11-17
  *
  */
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // -----------------------------------------------------------------------------
 
 
-function onIntersect(fn, targets, threshold) {
+function onIntersect(fn, targets, threshold = 0, rootMargin = '* 0px 0px 0px') {
 	const vs = Array(targets.length).fill(false);
 	const tm = new Map();
 	targets.forEach((t, i) => tm.set(t, i));
@@ -55,7 +55,7 @@ function onIntersect(fn, targets, threshold) {
 		const io = new IntersectionObserver((es) => {
 			for (const e of es) vs[tm.get(e.target)] = e.isIntersecting;
 			fn(vs);
-		}, { rootMargin: `${mt}px 0px 0px 0px`, threshold });
+		}, { rootMargin: rootMargin.replace('*', `${mt}px`), threshold });
 		for (const t of targets) io.observe(t);
 		return io;
 	}

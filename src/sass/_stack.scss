@@ -13,12 +13,12 @@ $phone-max-width: 599.5px;
 
 @mixin custom-property {
 	// main
-	--nc-stack-tab-min-width: 2rem;
-	--nc-stack-tab-max-width: 30vw;
-	--nc-stack-tab-gap      : 0.25rem 1rem;
+	--nc-tab-stack-tab-min-width: 2rem;
+	--nc-tab-stack-tab-max-width: 30vw;
+	--nc-tab-stack-tab-gap      : 0.25rem 1rem;
 
 	// print
-	--nc-stack-bar-print-scale: 0.75;
+	--nc-tab-stack-bar-print-scale: 0.75;
 }
 
 @mixin main {
@@ -52,7 +52,7 @@ $phone-max-width: 599.5px;
 	[data-nc-tab-bar] {
 		display  : flex;
 		flex-wrap: wrap;
-		gap      : var(--nc-stack-tab-gap);
+		gap      : var(--nc-tab-stack-tab-gap);
 
 		clear  : both;
 		padding: 0;
@@ -68,9 +68,9 @@ $phone-max-width: 599.5px;
 
 			a {
 				display  : inline-block;
-				min-width: var(--nc-stack-tab-min-width);
+				min-width: var(--nc-tab-stack-tab-min-width);
 
-				max-width    : var(--nc-stack-tab-max-width);
+				max-width    : var(--nc-tab-stack-tab-max-width);
 				text-overflow: ellipsis;
 				white-space  : nowrap;
 				overflow     : hidden;
@@ -101,8 +101,8 @@ $phone-max-width: 599.5px;
 
 @mixin print {
 	[data-nc-tab-bar] {
-		transform: scale(var(--nc-stack-bar-print-scale));
-		width    : calc(1 / var(--nc-stack-bar-print-scale) * 100%);
+		transform: scale(var(--nc-tab-stack-bar-print-scale));
+		width    : calc(1 / var(--nc-tab-stack-bar-print-scale) * 100%);
 	}
 	[data-nc-tab-bar]:first-child {
 		transform-origin: bottom left;
@@ -117,36 +117,36 @@ $phone-max-width: 599.5px;
 
 
 @mixin custom-property-appearance-bar {
-	--nc-stack-bar-background        : #eee;
-	--nc-stack-tab-padding           : 0.25rem 0.5rem;
-	--nc-stack-tab-background-hover  : #ddd;
-	--nc-stack-tab-background-current: #ccc;
-	--nc-stack-page-border           : 1px solid #ddd;
-	--nc-stack-page-background       : #fefefe;
-	--nc-stack-page-padding          : 2rem;
+	--nc-tab-stack-bar-background        : #eee;
+	--nc-tab-stack-tab-padding           : 0.25rem 0.5rem;
+	--nc-tab-stack-tab-background-hover  : #ddd;
+	--nc-tab-stack-tab-background-current: #ccc;
+	--nc-tab-stack-page-border           : 1px solid #ddd;
+	--nc-tab-stack-page-background       : #fefefe;
+	--nc-tab-stack-page-padding          : 2rem;
 }
 
 @mixin appearance-bar {
 	[data-nc-tab-bar] {
-		background: var(--nc-stack-bar-background);
+		background: var(--nc-tab-stack-bar-background);
 
 		&:first-child { margin-bottom: 0; }
 		&:last-child { margin-top: 0; }
 
 		li {
-			a { padding: var(--nc-stack-tab-padding); }
+			a { padding: var(--nc-tab-stack-tab-padding); }
 			&:not([data-nc-current]) > a:hover {
-				background: var(--nc-stack-tab-background-hover);
+				background: var(--nc-tab-stack-tab-background-hover);
 			}
 			&[data-nc-current] > a {
-				background: var(--nc-stack-tab-background-current);
+				background: var(--nc-tab-stack-tab-background-current);
 			}
 		}
 	}
 	> div {
-		border    : var(--nc-stack-page-border);
-		background: var(--nc-stack-page-background);
-		padding   : var(--nc-stack-page-padding);
+		border    : var(--nc-tab-stack-page-border);
+		background: var(--nc-tab-stack-page-background);
+		padding   : var(--nc-tab-stack-page-padding);
 	}
 }
 
@@ -155,27 +155,27 @@ $phone-max-width: 599.5px;
 
 
 @mixin custom-property-appearance-tab {
-	--nc-stack-bar-background        : #eee;
-	--nc-stack-tab-border-top        : 1px solid #ddd;
-	--nc-stack-tab-border-inline     : 1px solid #ddd;
-	--nc-stack-tab-border-bottom     : 1px dashed #ddd;
-	--nc-stack-tab-padding           : 0.25rem 0.5rem;
-	--nc-stack-tab-background-hover  : #ddd;
-	--nc-stack-tab-background-current: #fff;
-	--nc-stack-page-border           : 1px solid #ddd;
-	--nc-stack-page-background       : #fefefe;
-	--nc-stack-page-padding          : 2rem;
+	--nc-tab-stack-bar-background        : #eee;
+	--nc-tab-stack-tab-border-top        : 1px solid #ddd;
+	--nc-tab-stack-tab-border-inline     : 1px solid #ddd;
+	--nc-tab-stack-tab-border-bottom     : 1px dashed #ddd;
+	--nc-tab-stack-tab-padding           : 0.25rem 0.5rem;
+	--nc-tab-stack-tab-background-hover  : #ddd;
+	--nc-tab-stack-tab-background-current: #fff;
+	--nc-tab-stack-page-border           : 1px solid #ddd;
+	--nc-tab-stack-page-background       : #fefefe;
+	--nc-tab-stack-page-padding          : 2rem;
 }
 
 @mixin appearance-tab {
 	[data-nc-tab-bar] {
-		background: var(--nc-stack-bar-background);
+		background: var(--nc-tab-stack-bar-background);
 
 		&:first-child { margin-bottom: 0; }
 		&:last-child { margin-top: 0; }
 
 		li {
-			a { padding: var(--nc-stack-tab-padding); }
+			a { padding: var(--nc-tab-stack-tab-padding); }
 
 			&:not([data-nc-current]) > a:hover,
 			&[data-nc-current] > a {
@@ -183,12 +183,12 @@ $phone-max-width: 599.5px;
 			}
 
 			&:not([data-nc-current]) > a:hover {
-				background: var(--nc-stack-tab-background-hover);
+				background: var(--nc-tab-stack-tab-background-hover);
 			}
 			&[data-nc-current] > a {
-				background: var(--nc-stack-tab-background-current);
+				background: var(--nc-tab-stack-tab-background-current);
 
-				border-inline: var(--nc-stack-tab-border-inline);
+				border-inline: var(--nc-tab-stack-tab-border-inline);
 			}
 		}
 	}
@@ -199,8 +199,8 @@ $phone-max-width: 599.5px;
 				bottom: -1px;
 			}
 			&[data-nc-current] > a {
-				border-top   : var(--nc-stack-tab-border-top);
-				border-bottom: var(--nc-stack-tab-border-bottom);
+				border-top   : var(--nc-tab-stack-tab-border-top);
+				border-bottom: var(--nc-tab-stack-tab-border-bottom);
 			}
 		}
 	}
@@ -211,14 +211,14 @@ $phone-max-width: 599.5px;
 				top: -1px;
 			}
 			&[data-nc-current] > a {
-				border-bottom: var(--nc-stack-tab-border-top);
-				border-top   : var(--nc-stack-tab-border-bottom);
+				border-bottom: var(--nc-tab-stack-tab-border-top);
+				border-top   : var(--nc-tab-stack-tab-border-bottom);
 			}
 		}
 	}
 	> div {
-		border    : var(--nc-stack-page-border);
-		background: var(--nc-stack-page-background);
-		padding   : var(--nc-stack-page-padding);
+		border    : var(--nc-tab-stack-page-border);
+		background: var(--nc-tab-stack-page-background);
+		padding   : var(--nc-tab-stack-page-padding);
 	}
 }

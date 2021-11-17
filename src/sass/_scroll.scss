@@ -13,29 +13,29 @@
 
 @mixin custom-property {
 	// main
-	--nc-scroll-bar-margin-top      : 4rem;
-	--nc-scroll-bar-margin-bottom   : 2rem;
-	--nc-scroll-bar-inactive-opacity: 0.5;
-	--nc-scroll-tab-min-width       : 2rem;
-	--nc-scroll-tab-max-width       : 30vw;
-	--nc-scroll-tab-gap             : 0.25rem 1rem;
+	--nc-tab-scroll-bar-margin-top      : 4rem;
+	--nc-tab-scroll-bar-margin-bottom   : 2rem;
+	--nc-tab-scroll-bar-inactive-opacity: 0.5;
+	--nc-tab-scroll-tab-min-width       : 2rem;
+	--nc-tab-scroll-tab-max-width       : 30vw;
+	--nc-tab-scroll-tab-gap             : 0.25rem 1rem;
 
 	// print
-	--nc-scroll-bar-print-scale: 0.75;
+	--nc-tab-scroll-bar-print-scale: 0.75;
 }
 
 @mixin main {
 	[data-nc-tab-bar] {
-		&:where(:not(:first-child)) { margin-top: var(--nc-scroll-bar-margin-top); }
+		&:where(:not(:first-child)) { margin-top: var(--nc-tab-scroll-bar-margin-top); }
 
 		display  : flex;
 		flex-wrap: wrap;
-		gap      : var(--nc-scroll-tab-gap);
+		gap      : var(--nc-tab-scroll-tab-gap);
 
 		clear  : both;
 		padding: 0;
 
-		opacity   : var(--nc-scroll-bar-inactive-opacity);
+		opacity   : var(--nc-tab-scroll-bar-inactive-opacity);
 		transition: opacity 0.2s;
 
 		&[data-nc-active],
@@ -47,9 +47,9 @@
 
 			a {
 				display  : inline-block;
-				min-width: var(--nc-scroll-tab-min-width);
+				min-width: var(--nc-tab-scroll-tab-min-width);
 
-				max-width    : var(--nc-scroll-tab-max-width);
+				max-width    : var(--nc-tab-scroll-tab-max-width);
 				text-overflow: ellipsis;
 				white-space  : nowrap;
 				overflow     : hidden;
@@ -57,15 +57,15 @@
 		}
 	}
 	[data-nc-tab-bar] + * {
-		margin-top: var(--nc-scroll-bar-margin-bottom);
+		margin-top: var(--nc-tab-scroll-bar-margin-bottom);
 	}
 }
 
 @mixin print {
 	[data-nc-tab-bar] {
 		transform-origin: center left;
-		transform       : scale(var(--nc-scroll-bar-print-scale));
-		width           : calc(1 / var(--nc-scroll-bar-print-scale) * 100%);
+		transform       : scale(var(--nc-tab-scroll-bar-print-scale));
+		width           : calc(1 / var(--nc-tab-scroll-bar-print-scale) * 100%);
 
 		break-after: avoid-page;
 	}
@@ -76,25 +76,25 @@
 
 
 @mixin custom-property-appearance-bar {
-	--nc-scroll-bar-background        : #eee;
-	--nc-scroll-bar-border-bottom     : 1px solid #ddd;
-	--nc-scroll-tab-padding           : 0.25rem 0.5rem;
-	--nc-scroll-tab-background-hover  : #ddd;
-	--nc-scroll-tab-background-current: #ccc;
+	--nc-tab-scroll-bar-background        : #eee;
+	--nc-tab-scroll-bar-border-bottom     : 1px solid #ddd;
+	--nc-tab-scroll-tab-padding           : 0.25rem 0.5rem;
+	--nc-tab-scroll-tab-background-hover  : #ddd;
+	--nc-tab-scroll-tab-background-current: #ccc;
 }
 
 @mixin appearance-bar {
 	[data-nc-tab-bar] {
-		background   : var(--nc-scroll-bar-background);
-		border-bottom: var(--nc-scroll-bar-border-bottom);
+		background   : var(--nc-tab-scroll-bar-background);
+		border-bottom: var(--nc-tab-scroll-bar-border-bottom);
 
 		li {
-			a { padding: var(--nc-scroll-tab-padding); }
+			a { padding: var(--nc-tab-scroll-tab-padding); }
 			&:not([data-nc-current]) > a:hover {
-				background: var(--nc-scroll-tab-background-hover);
+				background: var(--nc-tab-scroll-tab-background-hover);
 			}
 			&[data-nc-current] > a {
-				background: var(--nc-scroll-tab-background-current);
+				background: var(--nc-tab-scroll-tab-background-current);
 			}
 		}
 	}
@@ -105,23 +105,23 @@
 
 
 @mixin custom-property-appearance-tab {
-	--nc-scroll-bar-background        : #eee;
-	--nc-scroll-bar-border-bottom     : 1px solid #ddd;
-	--nc-scroll-tab-border-top        : 1px solid #ddd;
-	--nc-scroll-tab-border-inline     : 1px solid #ddd;
-	--nc-scroll-tab-border-bottom     : 1px dashed #ddd;
-	--nc-scroll-tab-padding           : 0.25rem 0.5rem;
-	--nc-scroll-tab-background-hover  : #ddd;
-	--nc-scroll-tab-background-current: #fff;
+	--nc-tab-scroll-bar-background        : #eee;
+	--nc-tab-scroll-bar-border-bottom     : 1px solid #ddd;
+	--nc-tab-scroll-tab-border-top        : 1px solid #ddd;
+	--nc-tab-scroll-tab-border-inline     : 1px solid #ddd;
+	--nc-tab-scroll-tab-border-bottom     : 1px dashed #ddd;
+	--nc-tab-scroll-tab-padding           : 0.25rem 0.5rem;
+	--nc-tab-scroll-tab-background-hover  : #ddd;
+	--nc-tab-scroll-tab-background-current: #fff;
 }
 
 @mixin appearance-tab {
 	[data-nc-tab-bar] {
-		background   : var(--nc-scroll-bar-background);
-		border-bottom: var(--nc-scroll-bar-border-bottom);
+		background   : var(--nc-tab-scroll-bar-background);
+		border-bottom: var(--nc-tab-scroll-bar-border-bottom);
 
 		li {
-			a { padding: var(--nc-scroll-tab-padding); }
+			a { padding: var(--nc-tab-scroll-tab-padding); }
 
 			&:not([data-nc-current]) > a:hover,
 			&[data-nc-current] > a {
@@ -130,14 +130,14 @@
 			}
 
 			&:not([data-nc-current]) > a:hover {
-				background: var(--nc-scroll-tab-background-hover);
+				background: var(--nc-tab-scroll-tab-background-hover);
 			}
 			&[data-nc-current] > a {
-				background: var(--nc-scroll-tab-background-current);
+				background: var(--nc-tab-scroll-tab-background-current);
 
-				border-top   : var(--nc-scroll-tab-border-top);
-				border-inline: var(--nc-scroll-tab-border-inline);
-				border-bottom: var(--nc-scroll-tab-border-bottom);
+				border-top   : var(--nc-tab-scroll-tab-border-top);
+				border-inline: var(--nc-tab-scroll-tab-border-inline);
+				border-bottom: var(--nc-tab-scroll-tab-border-bottom);
 			}
 		}
 	}
