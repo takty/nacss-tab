@@ -3,7 +3,7 @@
  * Scroll
  *
  * @author Takuto Yanagida
- * @version 2021-11-17
+ * @version 2021-11-29
  *
  */
 
@@ -39,7 +39,9 @@
 		transition: opacity 0.2s;
 
 		&[data-nc-active],
-		&:hover { opacity: 1; }
+		&:hover {
+			opacity: 1;
+		}
 
 		li {
 			display: flex;
@@ -90,11 +92,15 @@
 
 		li {
 			a { padding: var(--nc-tab-scroll-tab-padding); }
-			&:not([data-nc-current]) > a:hover {
-				background: var(--nc-tab-scroll-tab-background-hover);
-			}
 			&[data-nc-current] > a {
 				background: var(--nc-tab-scroll-tab-background-current);
+			}
+		}
+	}
+	@media (hover: hover) {
+		[data-nc-tab-bar] {
+			li:not([data-nc-current]) > a:hover {
+				background: var(--nc-tab-scroll-tab-background-hover);
 			}
 		}
 	}
@@ -105,14 +111,17 @@
 
 
 @mixin custom-property-appearance-tab {
-	--nc-tab-scroll-bar-background        : #eee;
-	--nc-tab-scroll-bar-border-bottom     : 1px solid #ddd;
-	--nc-tab-scroll-tab-border-top        : 1px solid #ddd;
-	--nc-tab-scroll-tab-border-inline     : 1px solid #ddd;
-	--nc-tab-scroll-tab-border-bottom     : 1px dashed #ddd;
-	--nc-tab-scroll-tab-padding           : 0.25rem 0.5rem;
-	--nc-tab-scroll-tab-background-hover  : #ddd;
-	--nc-tab-scroll-tab-background-current: #fff;
+	--nc-tab-scroll-bar-background   : #eee;
+	--nc-tab-scroll-bar-border-bottom: 1px solid #ddd;
+
+	--nc-tab-scroll-tab-padding: 0.25rem 0.5rem;
+	--nc-tab-scroll-tab-border : 1px solid transparent;
+
+	--nc-tab-scroll-tab-hover-background     : #ddd;
+	--nc-tab-scroll-tab-current-border-top   : 1px solid #ddd;
+	--nc-tab-scroll-tab-current-border-inline: 1px solid #ddd;
+	--nc-tab-scroll-tab-current-border-bottom: 1px dashed #ddd;
+	--nc-tab-scroll-tab-current-background   : #fff;
 }
 
 @mixin appearance-tab {
@@ -121,23 +130,25 @@
 		border-bottom: var(--nc-tab-scroll-bar-border-bottom);
 
 		li {
-			a { padding: var(--nc-tab-scroll-tab-padding); }
-
-			&:not([data-nc-current]) > a:hover,
+			a {
+				padding: var(--nc-tab-scroll-tab-padding);
+				border : var(--nc-tab-scroll-tab-border);
+			}
 			&[data-nc-current] > a {
 				position: relative;
-				bottom: -1px;
-			}
+				bottom  : -1px;
 
-			&:not([data-nc-current]) > a:hover {
-				background: var(--nc-tab-scroll-tab-background-hover);
+				background   : var(--nc-tab-scroll-tab-current-background);
+				border-top   : var(--nc-tab-scroll-tab-current-border-top);
+				border-inline: var(--nc-tab-scroll-tab-current-border-inline);
+				border-bottom: var(--nc-tab-scroll-tab-current-border-bottom);
 			}
-			&[data-nc-current] > a {
-				background: var(--nc-tab-scroll-tab-background-current);
-
-				border-top   : var(--nc-tab-scroll-tab-border-top);
-				border-inline: var(--nc-tab-scroll-tab-border-inline);
-				border-bottom: var(--nc-tab-scroll-tab-border-bottom);
+		}
+	}
+	@media (hover: hover) {
+		[data-nc-tab-bar] {
+			li:not([data-nc-current]) > a:hover {
+				background: var(--nc-tab-scroll-tab-hover-background);
 			}
 		}
 	}

@@ -3,7 +3,7 @@
  * Tab
  *
  * @author Takuto Yanagida
- * @version 2021-11-17
+ * @version 2021-11-29
  *
  */
 
@@ -12,7 +12,7 @@
 @use 'stack';
 
 
-:root {
+:where(html) {
 	@include scroll.custom-property;
 	@include scroll.custom-property-appearance-bar;
 	// @include scroll.custom-property-appearance-tab;

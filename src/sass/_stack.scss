@@ -3,7 +3,7 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2021-11-17
+ * @version 2021-11-29
  *
  */
 
@@ -119,8 +119,8 @@ $phone-max-width: 599.5px;
 @mixin custom-property-appearance-bar {
 	--nc-tab-stack-bar-background        : #eee;
 	--nc-tab-stack-tab-padding           : 0.25rem 0.5rem;
-	--nc-tab-stack-tab-background-hover  : #ddd;
-	--nc-tab-stack-tab-background-current: #ccc;
+	--nc-tab-stack-tab-hover-background  : #ddd;
+	--nc-tab-stack-tab-current-background: #ccc;
 	--nc-tab-stack-page-border           : 1px solid #ddd;
 	--nc-tab-stack-page-background       : #fefefe;
 	--nc-tab-stack-page-padding          : 2rem;
@@ -135,11 +135,15 @@ $phone-max-width: 599.5px;
 
 		li {
 			a { padding: var(--nc-tab-stack-tab-padding); }
-			&:not([data-nc-current]) > a:hover {
-				background: var(--nc-tab-stack-tab-background-hover);
-			}
 			&[data-nc-current] > a {
-				background: var(--nc-tab-stack-tab-background-current);
+				background: var(--nc-tab-stack-tab-current-background);
+			}
+		}
+	}
+	@media (hover: hover) {
+		[data-nc-tab-bar] {
+			li:not([data-nc-current]) > a:hover {
+				background: var(--nc-tab-stack-tab-hover-background);
 			}
 		}
 	}
@@ -155,13 +159,17 @@ $phone-max-width: 599.5px;
 
 
 @mixin custom-property-appearance-tab {
-	--nc-tab-stack-bar-background        : #eee;
-	--nc-tab-stack-tab-border-top        : 1px solid #ddd;
-	--nc-tab-stack-tab-border-inline     : 1px solid #ddd;
-	--nc-tab-stack-tab-border-bottom     : 1px dashed #ddd;
-	--nc-tab-stack-tab-padding           : 0.25rem 0.5rem;
-	--nc-tab-stack-tab-background-hover  : #ddd;
-	--nc-tab-stack-tab-background-current: #fff;
+	--nc-tab-stack-bar-background: #eee;
+
+	--nc-tab-stack-tab-padding: 0.25rem 0.5rem;
+	--nc-tab-stack-tab-border : 1px solid transparent;
+
+	--nc-tab-stack-tab-hover-background     : #ddd;
+	--nc-tab-stack-tab-current-border-top   : 1px solid #ddd;
+	--nc-tab-stack-tab-current-border-inline: 1px solid #ddd;
+	--nc-tab-stack-tab-current-border-bottom: 1px dashed #ddd;
+	--nc-tab-stack-tab-current-background   : #fff;
+
 	--nc-tab-stack-page-border           : 1px solid #ddd;
 	--nc-tab-stack-page-background       : #fefefe;
 	--nc-tab-stack-page-padding          : 2rem;
@@ -175,44 +183,45 @@ $phone-max-width: 599.5px;
 		&:last-child { margin-top: 0; }
 
 		li {
-			a { padding: var(--nc-tab-stack-tab-padding); }
+			a {
+				padding: var(--nc-tab-stack-tab-padding);
+				border : var(--nc-tab-stack-tab-border);
+			}
 
-			&:not([data-nc-current]) > a:hover,
 			&[data-nc-current] > a {
 				position: relative;
-			}
 
-			&:not([data-nc-current]) > a:hover {
-				background: var(--nc-tab-stack-tab-background-hover);
-			}
-			&[data-nc-current] > a {
-				background: var(--nc-tab-stack-tab-background-current);
-
-				border-inline: var(--nc-tab-stack-tab-border-inline);
+				background   : var(--nc-tab-stack-tab-current-background);
+				border-inline: var(--nc-tab-stack-tab-current-border-inline);
 			}
 		}
 	}
 	[data-nc-tab-bar]:first-child {
 		li {
-			&:not([data-nc-current]) > a:hover,
 			&[data-nc-current] > a {
 				bottom: -1px;
 			}
 			&[data-nc-current] > a {
-				border-top   : var(--nc-tab-stack-tab-border-top);
-				border-bottom: var(--nc-tab-stack-tab-border-bottom);
+				border-top   : var(--nc-tab-stack-tab-current-border-top);
+				border-bottom: var(--nc-tab-stack-tab-current-border-bottom);
 			}
 		}
 	}
 	[data-nc-tab-bar]:last-child {
 		li {
-			&:not([data-nc-current]) > a:hover,
 			&[data-nc-current] > a {
 				top: -1px;
 			}
 			&[data-nc-current] > a {
-				border-bottom: var(--nc-tab-stack-tab-border-top);
-				border-top   : var(--nc-tab-stack-tab-border-bottom);
+				border-bottom: var(--nc-tab-stack-tab-current-border-top);
+				border-top   : var(--nc-tab-stack-tab-current-border-bottom);
+			}
+		}
+	}
+	@media (hover: hover) {
+		[data-nc-tab-bar] {
+			li:not([data-nc-current]) > a:hover {
+				background: var(--nc-tab-stack-tab-hover-background);
 			}
 		}
 	}
