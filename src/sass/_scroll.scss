@@ -13,12 +13,14 @@
 
 @mixin custom-property {
 	// main
-	--nc-tab-scroll-bar-margin-top      : 4rem;
-	--nc-tab-scroll-bar-margin-bottom   : 2rem;
+	--nc-tab-scroll-bar-margin-block-start: 4rem;
+	--nc-tab-scroll-bar-margin-block-end  : 2rem;
+
 	--nc-tab-scroll-bar-inactive-opacity: 0.5;
-	--nc-tab-scroll-tab-min-width       : 2rem;
-	--nc-tab-scroll-tab-max-width       : 30vw;
-	--nc-tab-scroll-tab-gap             : 0.25rem 1rem;
+
+	--nc-tab-scroll-tab-min-width: 2rem;
+	--nc-tab-scroll-tab-max-width: 30vw;
+	--nc-tab-scroll-tab-gap      : 0.25rem 1rem;
 
 	// print
 	--nc-tab-scroll-bar-print-scale: 0.75;
@@ -26,7 +28,7 @@
 
 @mixin main {
 	[data-nc-tab-bar] {
-		&:where(:not(:first-child)) { margin-top: var(--nc-tab-scroll-bar-margin-top); }
+		&:where(:not(:first-child)) { margin-block-start: var(--nc-tab-scroll-bar-margin-block-start); }
 
 		display  : flex;
 		flex-wrap: wrap;
@@ -59,7 +61,7 @@
 		}
 	}
 	[data-nc-tab-bar] + * {
-		margin-top: var(--nc-tab-scroll-bar-margin-bottom);
+		margin-block-start: var(--nc-tab-scroll-bar-margin-block-end);
 	}
 }
 
@@ -79,7 +81,8 @@
 
 @mixin custom-property-appearance-bar {
 	--nc-tab-scroll-bar-background        : #eee;
-	--nc-tab-scroll-bar-border-bottom     : 1px solid #ddd;
+	--nc-tab-scroll-bar-border-block-end  : 1px solid #ddd;
+
 	--nc-tab-scroll-tab-padding           : 0.25rem 0.5rem;
 	--nc-tab-scroll-tab-background-hover  : #ddd;
 	--nc-tab-scroll-tab-background-current: #ccc;
@@ -87,8 +90,8 @@
 
 @mixin appearance-bar {
 	[data-nc-tab-bar] {
-		background   : var(--nc-tab-scroll-bar-background);
-		border-bottom: var(--nc-tab-scroll-bar-border-bottom);
+		background      : var(--nc-tab-scroll-bar-background);
+		border-block-end: var(--nc-tab-scroll-bar-border-block-end);
 
 		li {
 			a { padding: var(--nc-tab-scroll-tab-padding); }
@@ -111,23 +114,23 @@
 
 
 @mixin custom-property-appearance-tab {
-	--nc-tab-scroll-bar-background   : #eee;
-	--nc-tab-scroll-bar-border-bottom: 1px solid #ddd;
+	--nc-tab-scroll-bar-background      : #eee;
+	--nc-tab-scroll-bar-border-block-end: 1px solid #ddd;
 
 	--nc-tab-scroll-tab-padding: 0.25rem 0.5rem;
 	--nc-tab-scroll-tab-border : 1px solid transparent;
 
-	--nc-tab-scroll-tab-hover-background     : #ddd;
-	--nc-tab-scroll-tab-current-border-top   : 1px solid #ddd;
-	--nc-tab-scroll-tab-current-border-inline: 1px solid #ddd;
-	--nc-tab-scroll-tab-current-border-bottom: 1px dashed #ddd;
-	--nc-tab-scroll-tab-current-background   : #fff;
+	--nc-tab-scroll-tab-hover-background          : #ddd;
+	--nc-tab-scroll-tab-current-background        : #fff;
+	--nc-tab-scroll-tab-current-border-inline     : 1px solid #ddd;
+	--nc-tab-scroll-tab-current-border-block-start: 1px solid #ddd;
+	--nc-tab-scroll-tab-current-border-block-end  : 1px dashed #ddd;
 }
 
 @mixin appearance-tab {
 	[data-nc-tab-bar] {
 		background   : var(--nc-tab-scroll-bar-background);
-		border-bottom: var(--nc-tab-scroll-bar-border-bottom);
+		border-block-end: var(--nc-tab-scroll-bar-border-block-end);
 
 		li {
 			a {
@@ -135,13 +138,13 @@
 				border : var(--nc-tab-scroll-tab-border);
 			}
 			&[data-nc-current] > a {
-				position: relative;
-				bottom  : -1px;
+				position       : relative;
+				inset-block-end: -1px;
 
-				background   : var(--nc-tab-scroll-tab-current-background);
-				border-top   : var(--nc-tab-scroll-tab-current-border-top);
-				border-inline: var(--nc-tab-scroll-tab-current-border-inline);
-				border-bottom: var(--nc-tab-scroll-tab-current-border-bottom);
+				background        : var(--nc-tab-scroll-tab-current-background);
+				border-inline     : var(--nc-tab-scroll-tab-current-border-inline);
+				border-block-start: var(--nc-tab-scroll-tab-current-border-block-start);
+				border-block-end  : var(--nc-tab-scroll-tab-current-border-block-end);
 			}
 		}
 	}
