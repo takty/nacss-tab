@@ -12,7 +12,7 @@
 @use 'stack';
 
 
-:where(html) {
+:root {
 	@include scroll.custom-property;
 	@include scroll.custom-property-appearance-bar;
 	// @include scroll.custom-property-appearance-tab;
