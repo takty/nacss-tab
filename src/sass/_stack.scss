@@ -119,7 +119,7 @@ $phone-max-width: 599.5px;
 @mixin custom-property-appearance-bar {
 	--nc-tab-stack-bar-background        : #eee;
 
-	--nc-tab-stack-tab-padding           : 0.25rem 0.5rem;
+	--nc-tab-stack-tab-padding           : 0.35rem 0.5rem;
 	--nc-tab-stack-tab-hover-background  : #ddd;
 	--nc-tab-stack-tab-current-background: #ccc;
 
@@ -163,7 +163,7 @@ $phone-max-width: 599.5px;
 @mixin custom-property-appearance-tab {
 	--nc-tab-stack-bar-background: #eee;
 
-	--nc-tab-stack-tab-padding: 0.25rem 0.5rem;
+	--nc-tab-stack-tab-padding: 0.35rem 0.5rem;
 	--nc-tab-stack-tab-border : 1px solid transparent;
 
 	--nc-tab-stack-tab-hover-background          : #ddd;
