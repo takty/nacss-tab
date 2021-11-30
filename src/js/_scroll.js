@@ -3,7 +3,7 @@
  * Scroll
  *
  * @author Takuto Yanagida
- * @version 2021-10-23
+ * @version 2021-11-30
  *
  */
 
@@ -45,17 +45,18 @@ function create(cont, cid, opts) {
 	const hs = extractHeaders(cont, cid, opts.hashPrefix);
 	if (hs.length === 0) return false;
 
-	const bars = [];
-	for (const h of hs) {
-		const bar = createBar(hs, h, opts);
+	const noHash = location.hash.length <= 1;
+	const bars   = [];
+	hs.forEach((h, idx) => {
+		const bar = createBar(hs, h, opts, noHash && idx === 0);
 		cont.insertBefore(bar.ul, h.elm);
 		bars.push(bar);
 		inst.uls.push(bar.ul);
-	}
+	});
 	assignEvent(inst, bars);
 
 	inst.active = getCurrentByHash(inst, location.hash);
-	setTimeout(() => update(inst), 10);
+	setTimeout(() => update(inst), 100);  // For avoiding unnecessary update
 	return inst;
 }
 
@@ -89,11 +90,12 @@ function extractHeaders(cont, cid, prefix) {
 	return hs;
 }
 
-function createBar(hs, curH, opts) {
+function createBar(hs, curH, opts, activate) {
 	const ul = document.createElement('ul');
 	ul.id = curH.id;
 	ul.className = '';  // for Dummy
 	setClass(ul, opts.styleBar);
+	if (activate) setClass(ul, opts.styleActive);
 	const as = [];
 
 	for (const h of hs) {
