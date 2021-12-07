@@ -3,28 +3,30 @@
  * Tab
  *
  * @author Takuto Yanagida
- * @version 2021-11-11
+ * @version 2021-12-07
  *
  */
 
+
+'use strict';
 
 window['NACSS'] = window['NACSS'] || {};
 
 
 (function (NS) {
 
-	(function () {
+	{
 		// @include _scroll.js
 		NS.tabScroll = initialize;
-	})();
+	}
 
-	(function () {
+	{
 		// @include _stack.js
 		NS.tabStack = initialize;
-	})();
+	}
 
-	// @include _style-class.js
 	// @include _common.js
-	// @include _utilities.js
+	// @include _style-class.js
+	// @include _utility.js
 
 })(window['NACSS']);
