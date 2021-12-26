@@ -3,23 +3,25 @@
  * Tab Scroll
  *
  * @author Takuto Yanagida
- * @version 2021-12-07
+ * @version 2021-12-26
  *
  */
 
 
 'use strict';
 
-window['NACSS'] = window['NACSS'] || {};
+window['NACSS']        = window['NACSS']        || {};
+window['NACSS']['tab'] = window['NACSS']['tab'] || {};
 
 
-(function (NS) {
+((NS) => {
+
+	// @include __style-class.js
+	// @include __utility.js
 
 	// @include _scroll.js
-	NS.tabScroll = initialize;
+	NS.applyScroll = apply;
 
 	// @include _common.js
-	// @include _style-class.js
-	// @include _utility.js
 
-})(window['NACSS']);
+})(window['NACSS']['tab']);

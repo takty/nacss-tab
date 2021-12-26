@@ -3,7 +3,7 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2021-11-29
+ * @version 2021-12-26
  *
  */
 
@@ -11,7 +11,7 @@
 $phone-max-width: 599.5px;
 
 
-@mixin custom-property {
+@mixin property-stack {
 	// main
 	--nc-tab-stack-tab-min-width: 2rem;
 	--nc-tab-stack-tab-max-width: 30vw;
@@ -21,7 +21,7 @@ $phone-max-width: 599.5px;
 	--nc-tab-stack-bar-print-scale: 0.75;
 }
 
-@mixin main {
+@mixin stack {
 	position      : relative;
 	z-index       : 0;
 	display       : flex;
@@ -99,7 +99,7 @@ $phone-max-width: 599.5px;
 	}
 }
 
-@mixin print {
+@mixin stack-print {
 	[data-nc-tab-bar] {
 		transform: scale(var(--nc-tab-stack-bar-print-scale));
 		width    : calc(1 / var(--nc-tab-stack-bar-print-scale) * 100%);
@@ -116,7 +116,7 @@ $phone-max-width: 599.5px;
 // -----------------------------------------------------------------------------
 
 
-@mixin custom-property-appearance-bar {
+@mixin property-stack-bar {
 	--nc-tab-stack-bar-background        : #eee;
 
 	--nc-tab-stack-tab-padding           : 0.35rem 0.5rem;
@@ -128,7 +128,7 @@ $phone-max-width: 599.5px;
 	--nc-tab-stack-page-padding          : 2rem;
 }
 
-@mixin appearance-bar {
+@mixin stack-bar {
 	[data-nc-tab-bar] {
 		background: var(--nc-tab-stack-bar-background);
 
@@ -160,7 +160,7 @@ $phone-max-width: 599.5px;
 // -----------------------------------------------------------------------------
 
 
-@mixin custom-property-appearance-tab {
+@mixin property-stack-tab {
 	--nc-tab-stack-bar-background: #eee;
 
 	--nc-tab-stack-tab-padding: 0.35rem 0.5rem;
@@ -177,7 +177,7 @@ $phone-max-width: 599.5px;
 	--nc-tab-stack-page-padding          : 2rem;
 }
 
-@mixin appearance-tab {
+@mixin stack-tab {
 	[data-nc-tab-bar] {
 		background: var(--nc-tab-stack-bar-background);
 

@@ -3,41 +3,22 @@
  * Tab
  *
  * @author Takuto Yanagida
- * @version 2021-11-29
+ * @version 2021-12-26
  *
  */
 
 
-@use 'scroll';
-@use 'stack';
+@use '_tab';
 
 
 :root {
-	@include scroll.custom-property;
-	@include scroll.custom-property-appearance-bar;
-	// @include scroll.custom-property-appearance-tab;
-
-	@include stack.custom-property;
-	@include stack.custom-property-appearance-bar;
-	// @include stack.custom-property-appearance-tab;
+	@include tab.property('bar', 'bar');
 }
 
 div.tab-scroll {
-	@include scroll.main;
-	@include scroll.appearance-bar;
-	// @include scroll.appearance-tab;
-
-	@media print {
-		@include scroll.print;
-	}
+	@include tab.scroll('bar');
 }
 
 div.tab-stack {
-	@include stack.main;
-	@include stack.appearance-bar;
-	// @include stack.appearance-tab;
-
-	@media print {
-		@include stack.print
-	}
+	@include tab.stack('bar');
 }

@@ -1,0 +1,56 @@
+/**
+ *
+ * Tab
+ *
+ * @author Takuto Yanagida
+ * @version 2021-12-26
+ *
+ */
+
+
+@forward 'scroll';
+@forward 'stack';
+
+@use 'scroll';
+@use 'stack';
+
+
+@mixin property($scroll-type: 'bar', $stack-type: 'bar') {
+	@include scroll.property-scroll;
+	@include stack.property-stack;
+
+	@if $scroll-type == 'tab' {
+		@include scroll.property-scroll-tab;
+	} @else {
+		@include scroll.property-scroll-bar;
+	}
+	@if $stack-type == 'tab' {
+		@include stack.property-stack-tab;
+	} @else {
+		@include stack.property-stack-bar;
+	}
+}
+
+@mixin scroll($type: 'bar') {
+	@include scroll.scroll;
+	@if $type == 'tab' {
+		@include scroll.scroll-tab;
+	} @else {
+		@include scroll.scroll-bar;
+	}
+	@media print {
+		@include scroll.scroll-print;
+	}
+}
+
+@mixin stack($type: 'bar') {
+	@include stack.stack;
+	@if $type == 'tab' {
+		@include stack.stack-tab;
+	} @else {
+		@include stack.stack-bar;
+	}
+	@media print {
+		@include stack.stack-print
+	}
+}

@@ -3,7 +3,7 @@
  * Scroll
  *
  * @author Takuto Yanagida
- * @version 2021-11-29
+ * @version 2021-12-26
  *
  */
 
@@ -11,7 +11,7 @@
 @use 'sass:math';
 
 
-@mixin custom-property {
+@mixin property-scroll {
 	// main
 	--nc-tab-scroll-bar-margin-block-start: 4rem;
 	--nc-tab-scroll-bar-margin-block-end  : 2rem;
@@ -26,7 +26,7 @@
 	--nc-tab-scroll-bar-print-scale: 0.75;
 }
 
-@mixin main {
+@mixin scroll {
 	[data-nc-tab-bar] {
 		&:where(:not(:first-child)) { margin-block-start: var(--nc-tab-scroll-bar-margin-block-start); }
 
@@ -65,7 +65,7 @@
 	}
 }
 
-@mixin print {
+@mixin scroll-print {
 	[data-nc-tab-bar] {
 		transform-origin: center left;
 		transform       : scale(var(--nc-tab-scroll-bar-print-scale));
@@ -79,7 +79,7 @@
 // -----------------------------------------------------------------------------
 
 
-@mixin custom-property-appearance-bar {
+@mixin property-scroll-bar {
 	--nc-tab-scroll-bar-background        : #eee;
 	--nc-tab-scroll-bar-border-block-end  : 1px solid #ddd;
 
@@ -88,7 +88,7 @@
 	--nc-tab-scroll-tab-background-current: #ccc;
 }
 
-@mixin appearance-bar {
+@mixin scroll-bar {
 	[data-nc-tab-bar] {
 		background      : var(--nc-tab-scroll-bar-background);
 		border-block-end: var(--nc-tab-scroll-bar-border-block-end);
@@ -113,7 +113,7 @@
 // -----------------------------------------------------------------------------
 
 
-@mixin custom-property-appearance-tab {
+@mixin property-scroll-tab {
 	--nc-tab-scroll-bar-background      : #eee;
 	--nc-tab-scroll-bar-border-block-end: 1px solid #ddd;
 
@@ -127,7 +127,7 @@
 	--nc-tab-scroll-tab-current-border-block-end  : 1px dashed #ddd;
 }
 
-@mixin appearance-tab {
+@mixin scroll-tab {
 	[data-nc-tab-bar] {
 		background   : var(--nc-tab-scroll-bar-background);
 		border-block-end: var(--nc-tab-scroll-bar-border-block-end);

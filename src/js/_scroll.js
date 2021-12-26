@@ -3,12 +3,12 @@
  * Scroll
  *
  * @author Takuto Yanagida
- * @version 2021-11-30
+ * @version 2021-12-26
  *
  */
 
 
-function initialize(cs, opts = {}) {
+function apply(cs, opts = {}) {
 	if (cs.length === 0) return;
 
 	opts = Object.assign({
