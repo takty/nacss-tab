@@ -21,15 +21,14 @@ $phone-max-width: 599.5px;
 	--nc-tab-stack-bar-print-scale: 0.75;
 }
 
-@mixin stack {
+@mixin stack($do-reset: true) {
 	position      : relative;
 	z-index       : 0;
 	display       : flex;
 	flex-direction: column;
 
 	> * {
-		box-sizing: border-box;  // For reset
-		margin    : 0;
+		margin: 0;
 	}
 
 	> div {
@@ -49,14 +48,17 @@ $phone-max-width: 599.5px;
 		> * { opacity: 1; }
 	}
 
-	[data-nc-tab-bar] {
+	[data-nc-tab-bar] {  // ul
 		display  : flex;
 		flex-wrap: wrap;
 		gap      : var(--nc-tab-stack-tab-gap);
 
 		clear  : both;
-		padding: 0;  // For reset
 		z-index: 1;
+
+		@if $do-reset {
+			padding: 0;  // For reset
+		}
 
 		li {
 			display: flex;

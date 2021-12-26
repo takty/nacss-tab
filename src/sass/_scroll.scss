@@ -26,16 +26,19 @@
 	--nc-tab-scroll-bar-print-scale: 0.75;
 }
 
-@mixin scroll {
-	[data-nc-tab-bar] {
+@mixin scroll($do-reset: true) {
+	[data-nc-tab-bar] {  // ul
 		&:where(:not(:first-child)) { margin-block-start: var(--nc-tab-scroll-bar-margin-block-start); }
 
 		display  : flex;
 		flex-wrap: wrap;
 		gap      : var(--nc-tab-scroll-tab-gap);
 
-		clear  : both;
-		padding: 0;  // For reset
+		clear: both;
+
+		@if $do-reset {
+			padding: 0;  // For reset
+		}
 
 		opacity   : var(--nc-tab-scroll-bar-inactive-opacity);
 		transition: opacity 0.2s;
