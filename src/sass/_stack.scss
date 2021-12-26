@@ -28,7 +28,7 @@ $phone-max-width: 599.5px;
 	flex-direction: column;
 
 	> * {
-		box-sizing: border-box;
+		box-sizing: border-box;  // For reset
 		margin    : 0;
 	}
 
@@ -55,7 +55,7 @@ $phone-max-width: 599.5px;
 		gap      : var(--nc-tab-stack-tab-gap);
 
 		clear  : both;
-		padding: 0;
+		padding: 0;  // For reset
 		z-index: 1;
 
 		li {
