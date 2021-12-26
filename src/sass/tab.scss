@@ -22,3 +22,17 @@ div.tab-scroll {
 div.tab-stack {
 	@include tab.stack('bar');
 }
+
+
+// -----------------------------------------------------------------------------
+
+
+@media print {
+	div.tab-scroll {
+		@include tab.scroll-print
+	}
+
+	div.tab-stack {
+		@include tab.stack-print;
+	}
+}
