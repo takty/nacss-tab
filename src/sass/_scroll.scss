@@ -3,7 +3,7 @@
  * Scroll
  *
  * @author Takuto Yanagida
- * @version 2021-12-26
+ * @version 2021-12-27
  *
  */
 
@@ -13,8 +13,8 @@
 
 @mixin property-scroll {
 	// main
-	--nc-tab-scroll-bar-margin-block-start: 4rem;
-	--nc-tab-scroll-bar-margin-block-end  : 2rem;
+	--nc-tab-scroll-bar-margin-block-start: 2rem;
+	--nc-tab-scroll-bar-margin-block-end  : -0.5rem;
 
 	--nc-tab-scroll-bar-inactive-opacity: 0.5;
 
