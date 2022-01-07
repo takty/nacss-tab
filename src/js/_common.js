@@ -3,7 +3,7 @@
  * Common Functions
  *
  * @author Takuto Yanagida
- * @version 2021-10-23
+ * @version 2022-01-07
  *
  */
 
@@ -32,7 +32,7 @@ function createAnchor(h) {
 }
 
 function spanning(e) {
-	for (const c of Array.from(e.children)) {
+	for (const c of [...e.children]) {
 		if (c.tagName === 'A' || c.tagName === 'SMALL') {
 			const s = document.createElement('span');
 			s.innerHTML = c.innerHTML;

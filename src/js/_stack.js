@@ -3,7 +3,7 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2021-12-26
+ * @version 2022-01-07
  *
  */
 
@@ -110,7 +110,7 @@ function extractHeadersAndPages(cont, cid, opts) {
 	const ps = [];
 	let curP = null;
 
-	for (const elm of Array.from(cont.children)) {
+	for (const elm of [...cont.children]) {
 		if (elm.tagName === tn) {
 			const id = `${opts.hashPrefix}${cid}-${hs.length + 1}`;
 			hs.push({ elm, id });
