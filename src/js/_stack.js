@@ -202,6 +202,8 @@ function update(inst, idx) {
 	const [{ as: a0 }, { as: a1 }] = inst.bars;
 
 	for (let i = 0; i < ps.length; i += 1) {
+		setClass(a0[i], inst.opts.styleCurrent, i === idx);
+		setClass(a1[i], inst.opts.styleCurrent, i === idx);
 		setClass(a0[i].parentElement, inst.opts.styleCurrent, i === idx);
 		setClass(a1[i].parentElement, inst.opts.styleCurrent, i === idx);
 		setClass(ps[i], inst.opts.styleCurrent, i === idx);

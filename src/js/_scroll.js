@@ -101,7 +101,10 @@ function createBar(hs, curH, opts, activate) {
 	for (const h of hs) {
 		const a = createAnchor(h);
 		const li = document.createElement('li');
-		if (h === curH) setClass(li, opts.styleCurrent);
+		if (h === curH) {
+			setClass(a, opts.styleCurrent);
+			setClass(li, opts.styleCurrent);
+		}
 		li.appendChild(a);
 		ul.appendChild(li);
 		as.push(a);
