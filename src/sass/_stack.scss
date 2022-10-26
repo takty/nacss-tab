@@ -3,12 +3,9 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2021-12-26
+ * @version 2022-10-26
  *
  */
-
-
-$phone-max-width: 599.5px;
 
 
 @mixin property-stack {
@@ -80,7 +77,7 @@ $phone-max-width: 599.5px;
 		}
 	}
 
-	@media screen and (max-width: $phone-max-width) {  // for Phone
+	&[data-nc-vertical] {
 		[data-nc-tab-bar] {
 			flex-direction: column;
 			li {
