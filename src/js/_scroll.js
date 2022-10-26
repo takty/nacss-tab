@@ -3,7 +3,7 @@
  * Scroll
  *
  * @author Takuto Yanagida
- * @version 2022-01-07
+ * @version 2022-10-26
  *
  */
 
@@ -42,7 +42,7 @@ function create(cont, cid, opts) {
 		uls   : [],
 		active: null,
 	}
-	const hs = extractHeaders(cont, cid, opts.hashPrefix);
+	const hs = extractHeadings(cont, cid, opts.hashPrefix);
 	if (hs.length === 0) return false;
 
 	const noHash = location.hash.length <= 1;
@@ -75,7 +75,7 @@ function getCurrentByHash(inst, hash) {
 // -------------------------------------------------------------------------
 
 
-function extractHeaders(cont, cid, prefix) {
+function extractHeadings(cont, cid, prefix) {
 	const fh = getFirstHeading(cont);
 	if (!fh) return [];
 	const tn = fh.tagName;
