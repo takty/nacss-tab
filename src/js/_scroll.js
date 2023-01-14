@@ -1,12 +1,9 @@
 /**
- *
  * Scroll
  *
  * @author Takuto Yanagida
  * @version 2022-10-26
- *
  */
-
 
 function apply(cs, opts = {}) {
 	if (cs.length === 0) return;

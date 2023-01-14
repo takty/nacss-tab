@@ -1,12 +1,9 @@
 /**
- *
  * Stack
  *
  * @author Takuto Yanagida
  * @version 2023-01-14
- *
  */
-
 
 function apply(cs, opts = {}) {
 	if (cs.length === 0) return;
