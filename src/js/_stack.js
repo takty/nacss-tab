@@ -3,7 +3,7 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2022-10-26
+ * @version 2023-01-13
  *
  */
 
@@ -168,7 +168,7 @@ function assignEvent(inst) {
 function onClick(e, inst, idx) {
 	e.preventDefault();
 	if (getComputedStyle(e.target.parentElement).pointerEvents === 'none') return;
-	let url = e.target.href;
+	let url = e.currentTarget.href;
 	if (inst.curIdx === idx) {
 		idx = -1;
 		url = url.replace(/#.*$/, '');
