@@ -3,7 +3,7 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2023-01-13
+ * @version 2023-01-14
  *
  */
 
@@ -21,6 +21,7 @@ function apply(cs, opts = {}) {
 		maxVerticalWidth: 599.5,
 		doRemoveHeading : false,
 		doUseHeadingId  : false,
+		doUseBarBelow   : true,
 	}, opts);
 	if (!opts.doRemoveHeading && opts.doUseHeadingId) {
 		opts.doUseHeadingId = false;
@@ -221,11 +222,16 @@ function resize(inst) {
 
 	if (isVertical(inst)) {
 		cont.style.minHeight = '';
+		if (!inst.opts.doUseBarBelow) {
+			inst.bars[1].ul.style.display = '';
+		}
 	} else {
 		const minH = getMinHeight(inst);
 		const h = (minH < window.innerHeight * inst.opts.maxHeightRate) ? `${minH}px` : '';
 		cont.style.minHeight = h;
-
+		if (!inst.opts.doUseBarBelow) {
+			inst.bars[1].ul.style.display = 'none';
+		}
 		if (inst.curIdx === -1) {
 			update(inst, 0);
 		}
