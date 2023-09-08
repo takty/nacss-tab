@@ -2,7 +2,7 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2022-10-26
+ * @version 2023-09-08
  */
 
 @mixin property-stack {
@@ -42,7 +42,7 @@
 		> * { opacity: 1; }
 	}
 
-	[data-nc-tab-bar] {  // ul
+	> [data-nc-tab-bar] {  // ul
 		display  : flex;
 		flex-wrap: wrap;
 		gap      : var(--nc-tab-stack-tab-gap);
@@ -75,7 +75,7 @@
 	}
 
 	&[data-nc-vertical] {
-		[data-nc-tab-bar] {
+		> [data-nc-tab-bar] {
 			flex-direction: column;
 			li a {
 				width    : 100%;
@@ -98,7 +98,7 @@
 }
 
 @mixin stack-print {
-	[data-nc-tab-bar] {
+	> [data-nc-tab-bar] {
 		width    : calc(1 / var(--nc-tab-stack-bar-print-scale) * 100%);
 		transform: scale(var(--nc-tab-stack-bar-print-scale));
 
@@ -133,7 +133,7 @@
 }
 
 @mixin stack-bar {
-	[data-nc-tab-bar] {
+	> [data-nc-tab-bar] {
 		background: var(--nc-tab-stack-bar-background);
 
 		li {
@@ -187,7 +187,7 @@
 }
 
 @mixin stack-tab {
-	[data-nc-tab-bar] {
+	> [data-nc-tab-bar] {
 		background: var(--nc-tab-stack-bar-background);
 
 		li {

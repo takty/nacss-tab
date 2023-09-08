@@ -2,7 +2,7 @@
  * Scroll
  *
  * @author Takuto Yanagida
- * @version 2022-10-26
+ * @version 2023-09-08
  */
 
 @use 'sass:math';
@@ -22,7 +22,7 @@
 }
 
 @mixin scroll($do-reset: true) {
-	[data-nc-tab-bar] {  // ul
+	> [data-nc-tab-bar] {  // ul
 		&:where(:not(:first-child)) { margin-block-start: var(--nc-tab-scroll-bar-margin-block-start); }
 
 		display  : flex;
@@ -65,7 +65,7 @@
 }
 
 @mixin scroll-print {
-	[data-nc-tab-bar] {
+	> [data-nc-tab-bar] {
 		width           : calc(1 / var(--nc-tab-scroll-bar-print-scale) * 100%);
 		transform       : scale(var(--nc-tab-scroll-bar-print-scale));
 		transform-origin: center left;
@@ -93,7 +93,7 @@
 }
 
 @mixin scroll-bar {
-	[data-nc-tab-bar] {
+	> [data-nc-tab-bar] {
 		background      : var(--nc-tab-scroll-bar-background);
 		border-block-end: var(--nc-tab-scroll-bar-border-block-end);
 
@@ -140,7 +140,7 @@
 }
 
 @mixin scroll-tab {
-	[data-nc-tab-bar] {
+	> [data-nc-tab-bar] {
 		background   : var(--nc-tab-scroll-bar-background);
 		border-block-end: var(--nc-tab-scroll-bar-border-block-end);
 
