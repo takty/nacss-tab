@@ -2,7 +2,7 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2023-09-08
+ * @version 2023-09-12
  */
 
 @mixin property-stack {
@@ -29,6 +29,7 @@
 		position       : absolute;
 		inset-block-end: 1000vh;
 		pointer-events : none;
+		max-width      : 100%;
 
 		opacity: 0;
 		> * { opacity: 0; }
