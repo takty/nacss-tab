@@ -2,7 +2,7 @@
  * Stack
  *
  * @author Takuto Yanagida
- * @version 2023-09-12
+ * @version 2024-09-09
  */
 
 @mixin property-stack {
@@ -52,6 +52,9 @@
 
 		@if $do-reset {
 			padding: 0;  // For reset
+			> li {
+				margin: 0;
+			}
 		}
 
 		li {
